@@ -37,7 +37,7 @@
         <!-- api接口 -->
         <dependency>
             <groupId>com.cai</groupId>
-            <artifactId>funtour</artifactId>
+            <artifactId>api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -94,6 +94,15 @@
             <artifactId>springfox-swagger2</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
 
     </dependencies>
 

@@ -7,5 +7,6 @@ package com.cai.funtour.tools;
  */
 public class Tools {
     public static final String TRACE_ID = "traceId";
+    public static final String TOKEN = "token";
 
 }

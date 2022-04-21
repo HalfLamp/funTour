@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /public
+spring:
+  application:
+    name: public-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: czytgc.com:8848
+        group: funtour
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8

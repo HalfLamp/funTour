@@ -1,1 +1,0 @@
-2022-04-23 16:19:17.471 ERROR trace-id: org.apache.dubbo.common.extension.ExtensionLoader 899 saveInExtensionClass -  [DUBBO] Duplicate extension org.apache.dubbo.registry.RegistryFactory name nacos on org.apache.dubbo.registry.nacos.NacosRegistryFactory and com.alibaba.dubbo.registry.nacos.NacosRegistryFactory, dubbo version: 2.7.6, current host: 192.168.126.1

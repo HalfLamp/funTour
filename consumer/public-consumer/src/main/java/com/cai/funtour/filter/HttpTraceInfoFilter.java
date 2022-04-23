@@ -3,7 +3,7 @@ package com.cai.funtour.filter;
 import com.cai.funtour.tools.Tools;
 import com.cai.funtour.tools.TraceId;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.dubbo.common.utils.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.Order;
@@ -37,5 +37,6 @@ public class HttpTraceInfoFilter implements Filter {
         }
         traceThreadLocal.set(traceId);
         MDC.put(Tools.TRACE_ID, traceId);
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 }

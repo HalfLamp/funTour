@@ -21,9 +21,6 @@
         <Console name="Console" target="SYSTEM_OUT"><!--输出的类型SYSTEM_ERR-->
             <PatternLayout pattern="${PATTERN_FORMAT}"/>
         </Console>
-        <AtDbAppender name="AtDbAppender">
-            <PatternLayout pattern="{'type':'1','grade':'%p','mis':'%appKey','caller':'%ex{10}','content':'%ms','creator':'%user','ip':'%ip'}" alwaysWriteExceptions="false"/>
-        </AtDbAppender>
 
         <!--输出info信息日志到文件 用来定义超过指定大小自动删除旧的创建新的的Appender.-->
         <RollingFile name="RollingInfoFile" fileName="${LOG_FILE_PATH}/info.log"

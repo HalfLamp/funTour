@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        group: FUNTOUR_DEV
+      server-addr: czytgc.com:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: public-consumer
+          uri: lb://public-consumer
+          predicates:
+            - Path=/public/**
+logging:
+  level:
+    root: info
+  config: classpath:log4j2.xml

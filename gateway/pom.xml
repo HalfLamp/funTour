@@ -83,7 +83,6 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -112,6 +111,7 @@
     </dependencyManagement>
 
     <build>
+        <finalName>gateway</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

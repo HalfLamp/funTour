@@ -1,4 +1,0 @@
-com\cai\funtour\config\CorsOrigin.class
-com\cai\funtour\GatewayApplication.class
-com\cai\funtour\filter\AccessFilter.class
-com\cai\funtour\filter\TraceIdFilter.class

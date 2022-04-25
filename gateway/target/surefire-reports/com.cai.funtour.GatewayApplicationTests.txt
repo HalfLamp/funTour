@@ -1,7 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.cai.funtour.GatewayApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.566 s <<< FAILURE! - in com.cai.funtour.GatewayApplicationTests
-com.cai.funtour.GatewayApplicationTests  Time elapsed: 0.564 s  <<< ERROR!
-java.lang.IllegalStateException: Found multiple @SpringBootConfiguration annotated classes [Generic bean: class [com.cai.funtour.GatewayApplication]; scope=; abstract=false; lazyInit=null; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [S:\project\back\work\funTour\gateway\target\classes\com\cai\funtour\GatewayApplication.class], Generic bean: class [com.cai.funtour.ApiApplication]; scope=; abstract=false; lazyInit=null; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in URL [jar:file:/D:/Java/m2/repository/com/cai/api/0.0.1-SNAPSHOT/api-0.0.1-SNAPSHOT.jar!/com/cai/funtour/ApiApplication.class]]
-

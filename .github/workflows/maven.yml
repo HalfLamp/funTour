@@ -6,7 +6,7 @@ name: Java CI with Maven
 on:
   push:
     tags:
-      - gateway.relese.v*
+      - gateway.release.v*
 env:
   IMAGE: candengbanzhan/gateway:RELEASE
   NAME: gateway

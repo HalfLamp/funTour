@@ -5,9 +5,8 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ other/gateway ]
     tags:
-      - release
+      - gateway.relese.v*
 env:
   IMAGE: candengbanzhan/gateway:RELEASE
   NAME: gateway

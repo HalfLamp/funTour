@@ -38,8 +38,8 @@ jobs:
       uses: webfactory/ssh-agent@v0.5.4
       with:
         ssh-private-key: ${{ secrets.SSH_PASSWORD }}
-#    - name: Setup knownhosts
-#      run: ssh-keyscan zhiyuan.cai >> ~/.ssh/known_hosts
+    - name: Setup knownhosts
+      run: ssh-keyscan czytgc.com >> ~/.ssh/known_hosts
     - name: Run SSH Command
       run: |
         ssh root@czytgc.com "docker stop ${{ env.NAME }}"

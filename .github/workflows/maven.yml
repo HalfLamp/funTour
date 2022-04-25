@@ -40,11 +40,11 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.SSH_PASSWORD }}
     - name: Setup knownhosts
-      run: ssh-keyscan zhiyuan.cai >> ~/.ssh/known_hosts
+      run: ssh-keyscan czytgc.com >> ~/.ssh/known_hosts
     - name: Run SSH Command
       run: |
-        ssh root@zhiyuan.cai "docker stop ${{ env.NAME }}"
-        ssh root@zhiyuan.cai "docker rm ${{ env.NAME }}"
-        ssh root@zhiyuan.cai "docker pull ${{ env.IMAGE }}"
-        ssh root@zhiyuan.cai "docker run -d -p 8771:8080 --name ${{ env.NAME }} ${{ env.IMAGE }}"
+        ssh root@czytgc.com "docker stop ${{ env.NAME }}"
+        ssh root@czytgc.com "docker rm ${{ env.NAME }}"
+        ssh root@czytgc.com "docker pull ${{ env.IMAGE }}"
+        ssh root@czytgc.com "docker run -d -p 8771:8080 --name ${{ env.NAME }} ${{ env.IMAGE }}"
 

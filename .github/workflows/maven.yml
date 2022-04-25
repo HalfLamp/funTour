@@ -28,5 +28,17 @@ jobs:
 
     - name: Build Docker Images
       run: |
-        docker build . -t candengbanzhan/gateway:1.1
-        docker push candengbanzhan/gateway:1.1
+        docker build . -t candengbanzhan/gateway:RELEASE
+        docker push candengbanzhan/gateway:RELEASE
+
+    - name: Login Server
+      uses: webfactory/ssh-agent@v0.1.1
+      with:
+        ssh-private-key: ${{ secrets.SSH_PASSWORD }}
+    - name: Setup knownhosts
+      run: ssh-keyscan zhiyuan.cai >> ~/.ssh/known_hosts
+    - name: Run SSH Command
+      run: |
+        ssh root@zhiyuan.cai "docker pull candengbanzhan/gateway:RELEASE"
+        ssh root@zhiyuan.cai "docker run -d -p 8771:8080 --name gateway candengbanzhan/gateway:RELEASE"
+

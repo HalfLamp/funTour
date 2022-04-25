@@ -5,7 +5,8 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [other/gateway]
+    tags:
+      - gateway.release.v*
 env:
   IMAGE: candengbanzhan/gateway:RELEASE
   NAME: gateway
@@ -29,10 +30,10 @@ jobs:
         # Password or personal access token used to log against the Docker registry
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-#    - name: Build Docker Images
-#      run: |
-#        docker build . -t ${{ env.IMAGE }}
-#        docker push ${{ env.IMAGE }}
+    - name: Build Docker Images
+      run: |
+        docker build . -t ${{ env.IMAGE }}
+        docker push ${{ env.IMAGE }}
 
     - name: Login Server
       uses: webfactory/ssh-agent@v0.5.4

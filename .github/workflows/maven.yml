@@ -6,6 +6,11 @@ name: Java CI with Maven
 on:
   push:
     branches: [ other/gateway ]
+    tags:
+      - release
+env:
+  IMAGE: candengbanzhan/gateway:RELEASE
+  NAME: gateway
 
 jobs:
   build:
@@ -28,17 +33,19 @@ jobs:
 
     - name: Build Docker Images
       run: |
-        docker build . -t candengbanzhan/gateway:RELEASE
-        docker push candengbanzhan/gateway:RELEASE
+        docker build . -t ${{ env.IMAGE }}
+        docker push ${{ env.IMAGE }}
 
     - name: Login Server
-      uses: webfactory/ssh-agent@v0.1.1
+      uses: webfactory/ssh-agent@v0.5.4
       with:
         ssh-private-key: ${{ secrets.SSH_PASSWORD }}
     - name: Setup knownhosts
       run: ssh-keyscan zhiyuan.cai >> ~/.ssh/known_hosts
     - name: Run SSH Command
       run: |
-        ssh root@zhiyuan.cai "docker pull candengbanzhan/gateway:RELEASE"
-        ssh root@zhiyuan.cai "docker run -d -p 8771:8080 --name gateway candengbanzhan/gateway:RELEASE"
+        ssh root@zhiyuan.cai "docker stop ${{ env.NAME }}"
+        ssh root@zhiyuan.cai "docker rm ${{ env.NAME }}"
+        ssh root@zhiyuan.cai "docker pull ${{ env.IMAGE }}"
+        ssh root@zhiyuan.cai "docker run -d -p 8771:8080 --name ${{ env.NAME }} ${{ env.IMAGE }}"
 

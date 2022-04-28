@@ -10,6 +10,7 @@ on:
 env:
   IMAGE: candengbanzhan/public-consumer:RELEASE
   NAME: public-consumer
+  PORT: 8772
 
 jobs:
   build:
@@ -46,5 +47,5 @@ jobs:
           ssh root@czytgc.com "docker stop ${{ env.NAME }}"
           ssh root@czytgc.com "docker rm ${{ env.NAME }}"
           ssh root@czytgc.com "docker pull ${{ env.IMAGE }}"
-          ssh root@czytgc.com "docker run -d -p 8771:8080 --name ${{ env.NAME }} ${{ env.IMAGE }}"
+          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:8080 --name ${{ env.NAME }} ${{ env.IMAGE }}"
 

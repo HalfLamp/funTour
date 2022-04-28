@@ -110,13 +110,11 @@
 
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    <distributionManagement>
+        <repository>
+            <id>snapshots</id>
+            <url>http://czytgc.com:8123/repository/maven-snapshots/</url>
+        </repository>
+    </distributionManagement>
 
 </project>

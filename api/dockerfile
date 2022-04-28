@@ -1,2 +1,5 @@
 FROM maven:3.8.5-jdk-8 AS build
 COPY settings.xml /usr/share/maven/conf/settings.xml
+
+RUN mvn dependency:get -DremoteRepositories=http://czytgc.com:8123/repository/maven-public/ -DgroupId=com.cai -DartifactId=provider -Dversion=0.0.1-SNAPSHOT
+RUN mvn dependency:get -DremoteRepositories=http://czytgc.com:8123/repository/maven-public/ -DgroupId=com.cai -DartifactId=consumer -Dversion=0.0.1-SNAPSHOT

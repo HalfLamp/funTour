@@ -24,6 +24,7 @@
     </dependencies>
 
     <build>
+        <finalName>public-consumer</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

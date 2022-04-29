@@ -20,6 +20,7 @@
     </dependencies>
 
     <build>
+        <finalName>user-provider</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

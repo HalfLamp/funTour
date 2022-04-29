@@ -1,0 +1,38 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /provider/user
+spring:
+  # 解决循环依赖
+  main:
+    allow-circular-references: true
+  application:
+    name: public-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: czytgc.com:8848
+        group: FUNTOUR_DEV
+      config:
+        server-addr: czytgc.com:8848
+        group: FUNTOUR_PROVIDER_DEV
+        file-extension: yaml
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+dubbo:
+  protocol:
+    # http;RMI;Redis;H;dubbo
+    name: dubbo
+    port: -1
+  registry:
+    # zookeeper;redis;nacos;Eureka
+    address: nacos://czytgc.com:8848
+  scan:
+    base-packages: com.cai.funtour.service
+  provider:
+    timeout: 2000
+    retries: 1
+mybatis:
+  type-aliases-package: com.cai.funtour.po
+  mapper-locations: classpath:mapper/*.xml

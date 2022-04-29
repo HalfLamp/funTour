@@ -30,34 +30,11 @@ spring:
         server-addr: czytgc.com:8848
         group: FUNTOUR_DEV
         file-extension: yaml
+        prefix: PROVIDER_DATABASE
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-  datasource:
-    url: jdbc:mysql://czytgc.com:3307/amusingtourdb?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
-    username: czy
-    password: Mysql@826525
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource  #当前数据源操作类型
-    druid:
-     # 开启sql监控和防火墙
-     aop-patterns: com.xbhog.*
-     filters: stat,wall
-     # 配置监控页功能
-     stat-view-servlet:
-       enabled: true
-       login-username: admin
-       login-password: caizhiyuan826525
-       reset-enable: false
-     filter:
-       stat:
-         slow-sql-millis: 1000
-         log-slow-sql: true
-         enabled: true
-       wall:
-         enabled: true
-         config:
-           drop-table-allow: false
+
 mybatis:
   type-aliases-package: com.cai.funtour.po
   mapper-locations: classpath:mapper/*.xml

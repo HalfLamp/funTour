@@ -2,6 +2,8 @@ package com.cai.funtour.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cai.funtour.pojo.Result;
+import org.apache.ibatis.binding.BindingException;
+import org.apache.ibatis.exceptions.IbatisException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,9 +31,14 @@ public class LogAspect {
 
         try {
             result = pjp.proceed();
+        } catch (IbatisException e) {
+            logger.error("执行结果异常，错误类型：{}；错误信息：{}", e.getClass().getName(), e.getMessage());
+            logger.error("错误栈信息: ", e);
+            result = Result.error(501, "Mybatis错误");
         } catch (Throwable e) {
-            e.printStackTrace();
-            logger.error("执行方法出错", e);
+            logger.error("执行结果异常，错误类型：{}；错误信息：{}", e.getClass().getName(), e.getMessage());
+            logger.error("错误栈信息: ", e);
+            result = Result.error(500, e.getMessage());
         } finally {
             logger.info("返回结果：{}", result == null ? "null" : result);
             return result;

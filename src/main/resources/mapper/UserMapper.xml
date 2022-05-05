@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cai.funtour.mapper.UserMapper">
-    <select id="findUser" parameterType="string" resultType="map">
+    <select id="login" parameterType="string" resultType="map">
         select * from sys_user where (`phone` = #{account} or `email` = #{account}) and password = #{password}
     </select>
 
-    <insert id="addUser" parameterType="com.cai.funtour.po.User">
+    <insert id="registry" parameterType="com.cai.funtour.po.User">
         insert into sys_user (`user_id`, `name`, `phone`, `password`, `is_prohibit`, `region_id`, `age`, `sex`, `email`)
         VALUES
         (#{userId}, #{name},#{phone}, #{password}, #{isProhibit},#{regionId}, #{age}, #{sex}, #{email})

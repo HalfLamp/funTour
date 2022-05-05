@@ -2,7 +2,9 @@ package com.cai.funtour.mapper;
 
 import com.cai.funtour.po.User;
 import com.cai.funtour.pojo.Result;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -14,7 +16,7 @@ import java.util.Map;
  */
 @Repository
 public interface UserMapper {
-    public Map<String, Object> login(String account, String password);
+    public Map<String, Object> login(@Param("account") String account, @Param("password") String password);
 
     public int registry(User user);
 }

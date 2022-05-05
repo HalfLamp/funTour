@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @description：将请求头中的traceId取出并加入MDC
  */
 @Slf4j
-@Activate(group = {"provider"})
+@Activate(group = {"provider"},order = 0)
 @Component
 public class DubboTraceInfoFilter implements Filter {
     @Override

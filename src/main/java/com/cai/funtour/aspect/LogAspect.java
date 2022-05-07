@@ -2,7 +2,6 @@ package com.cai.funtour.aspect;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cai.funtour.pojo.Result;
-import org.apache.ibatis.binding.BindingException;
 import org.apache.ibatis.exceptions.IbatisException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

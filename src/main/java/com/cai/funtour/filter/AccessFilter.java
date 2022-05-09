@@ -12,13 +12,18 @@ import com.cai.funtour.pojo.Result;
 import com.cai.funtour.tools.Tools;
 import com.google.common.net.HttpHeaders;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -43,25 +48,33 @@ public class AccessFilter implements GlobalFilter, Ordered {
         log.info("请求路径：{}；请求token：{}", path, token);
 
         // 公共请求，不检查token
-        if (path.contains(PUBLIC_URL)){
+        if (path.contains(PUBLIC_URL)) {
             return chain.filter(exchange);
         }
         // 不含token
-        if (StringUtils.isBlank(token)){
+        if (StringUtils.isBlank(token)) {
             return responseError(exchange, 401, "不含token");
         }
 
-        // TODO redis验证token有效期
+        // 从redis验证并刷新token有效期
+        String key = "funTour:token:" + token;
+        String url = "czytgc.com:8772/public/user/cache/" + key;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Result> response = restTemplate.exchange(url, HttpMethod.GET, null, Result.class);
+        Result cache = response.getBody();
+        if (cache == null){
+            return responseError(exchange, 401, "token过期");
+        }
 
         // token校验
         try {
             String userId = JWT.decode(token).getAudience().get(0);
             JWTVerifier verifier = JWT.require(Algorithm.RSA256(RSA256Key.getInstance().getPublicKey())).withIssuer(Tools.JWT_IISUSER).build();
             DecodedJWT decodedJWT = verifier.verify(token);
-        }catch (NoSuchAlgorithmException e){
+        } catch (NoSuchAlgorithmException e) {
             log.error("RSA公私钥生成错误", e);
             return responseError(exchange, 500, "系统错误");
-        }catch (JWTVerificationException e){
+        } catch (JWTVerificationException e) {
             return responseError(exchange, 401, "token校验失败");
         }
 
@@ -75,12 +88,13 @@ public class AccessFilter implements GlobalFilter, Ordered {
 
     /**
      * 拦截请求并响应错误信息
+     *
      * @param exchange
-     * @param code  请求错误编码
-     * @param msg   请求错误信息
+     * @param code     请求错误编码
+     * @param msg      请求错误信息
      * @return
      */
-    private Mono<Void> responseError(ServerWebExchange exchange, Integer code, String msg){
+    private Mono<Void> responseError(ServerWebExchange exchange, Integer code, String msg) {
         ServerHttpResponse response = exchange.getResponse();
         Result result = new Result();
         result.setCode(code);

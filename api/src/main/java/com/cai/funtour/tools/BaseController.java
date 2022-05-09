@@ -6,4 +6,7 @@ package com.cai.funtour.tools;
  * @description：控制层基类
  */
 public class BaseController extends Base{
+
+    protected String token;
+    protected String userId;
 }

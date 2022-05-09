@@ -13,4 +13,6 @@ public class Tools {
     public static final String JWT_IISUSER = "funtour";
     public static final String JWT_SUBJECT_USER = "normal_user";
     public static final String JWT_SUBJECT_SYSTEM = "manager_user";
+
+    public static final String CACHE_TOKEN = "funTour:token";
 }

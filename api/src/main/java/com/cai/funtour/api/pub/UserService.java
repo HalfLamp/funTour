@@ -11,4 +11,5 @@ import com.cai.funtour.pojo.Result;
 public interface UserService {
     Result login(String account, String password);
     Result register(User user);
+    Result checkToken(String key);
 }

@@ -11,7 +11,7 @@ env:
   IMAGE: candengbanzhan/user-go-provider:RELEASE
   NAME: user-go-provider
   PORT: 8992
-  PATH: /app/cmd/log
+  CONTAINERPATH: /app/cmd/log
   HOSTPATH: /usr/local/springboot/vol/user/go/provider/user
 
 jobs:
@@ -49,4 +49,4 @@ jobs:
           ssh root@czytgc.com "docker stop ${{ env.NAME }}"
           ssh root@czytgc.com "docker rm ${{ env.NAME }}"
           ssh root@czytgc.com "docker pull ${{ env.IMAGE }}"
-          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:80 --name ${{ env.NAME }} -v ${{env.HOSTPATH}}:${{env.PATH}} ${{ env.IMAGE }}"
+          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:80 --name ${{ env.NAME }} -v ${{env.HOSTPATH}}:${{env.CONTAINERPATH}} ${{ env.IMAGE }}"

@@ -1,8 +1,11 @@
 dubbo:
+  application:
+    name: user-provider
   registries:
-    nacos:
-      protocol: nacos
-      address: czytgc.com:8848
+    nacosWithCustomGroup:
+      protocol: nacos # 注册中心选择 nacos
+      address: czytgc.com:8848 # nacos ip
+      group: FUNTOUR_DEV # nacos group, 默认 DEFAULT_GROUP
   protocols:
     dubbo:
       name: dubbo

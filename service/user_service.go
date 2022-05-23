@@ -46,13 +46,13 @@ func (*UserService) Register(user User) (*Result, error) {
 }
 
 // 校验token有效期并刷新有效期
-func (*UserService) checkToken(key string) (*Result, error) {
+func (*UserService) CheckToken(key string) (*Result, error) {
 	redis := database.GetConnect()
 	reply, _ := redis.Do("get", key)
 	result := fmt.Sprintln(reply)
 	if result == "" {
 		return ToData(""), nil
-	}else{
+	} else {
 		// 设置过期时间为15分钟
 		redis.Do("expire", key, 900)
 		return ToData(result), nil
@@ -62,7 +62,8 @@ func (*UserService) checkToken(key string) (*Result, error) {
 // MethodMapper 定义方法名映射，从 Go 的方法名映射到 Java 小写方法名，只有 dubbo 协议服务接口才需要使用
 func (s *UserService) MethodMapper() map[string]string {
 	return map[string]string{
-		"Login":    "login",
-		"Register": "register",
+		"Login":      "login",
+		"Register":   "register",
+		"CheckToken": "checkToken",
 	}
 }

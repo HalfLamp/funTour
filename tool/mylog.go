@@ -11,7 +11,7 @@ var debug *gulu.Logger
 var error *gulu.Logger
 var TraceId string
 
-func inits() {
+func init() {
 	file := "./log/info.log"
 	infoOut, err := os.Open(file)
 	if err != nil {

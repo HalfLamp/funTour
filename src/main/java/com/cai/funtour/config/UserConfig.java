@@ -16,10 +16,10 @@ import java.util.Date;
  */
 @Slf4j
 public class UserConfig {
-    public static String getToken(User user) {
+    public static String getToken(String userId) {
         try {
             String token = JWT.create()
-                    .withAudience(user.getUserId())
+                    .withAudience(userId)
                     .withIssuedAt(new Date())
                     .sign(Algorithm.RSA256(RSA256Key.getInstance().getPrivateKey()));
             return token;

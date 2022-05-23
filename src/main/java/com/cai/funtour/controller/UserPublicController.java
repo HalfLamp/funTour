@@ -1,7 +1,9 @@
 package com.cai.funtour.controller;
 
 import cn.hutool.core.io.FileTypeUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.cai.funtour.api.pub.UserService;
+import com.cai.funtour.config.UserConfig;
 import com.cai.funtour.config.WebConfig;
 import com.cai.funtour.po.User;
 import com.cai.funtour.pojo.Result;
@@ -47,14 +49,21 @@ public class UserPublicController extends BaseController {
     @PostMapping("login")
     public Result login(@ApiParam("参数account，password") @RequestBody Map<String, String> params) {
         Result result = user.login(params.get("account"), params.get("password"));
-        return result;
+        Map map = JSONObject.parseObject((String) result.getData(), Map.class);
+        User user = (User) map.get("user");
+        map.put("token", UserConfig.getToken(user.getUserId()));
+        return Result.toData(map);
     }
 
     @ApiOperation("登录接口")
     @PostMapping("/register")
     public Result register(@RequestBody User params) {
         Result result = user.register(params);
-        return result;
+        Map map = JSONObject.parseObject((String) result.getData(), Map.class);
+        User user = (User) map.get("user");
+        map.put("token", UserConfig.getToken(user.getUserId()));
+
+        return Result.toData(map);
     }
 
 }

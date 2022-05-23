@@ -1,0 +1,16 @@
+dubbo:
+  registries:
+    nacos:
+      protocol: nacos
+      address: czytgc.com:8848
+  protocols:
+    dubbo:
+      name: dubbo
+      port: 20000
+  provider:
+    services:
+      UserService:
+        interface: com.cai.funtour.api.pub.UserService
+  logger:
+    zap-config:
+      level: error

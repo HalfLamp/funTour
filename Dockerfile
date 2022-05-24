@@ -9,9 +9,9 @@ FROM openjdk:8
 ENV TZ=Asia/Shanghai
 ENV JAR public-consumer.jar
 #强行创建软连接更改时间,更改时间
-RUN ln -sf /usr/share/zoneinfo/$TZ \
-    && echo $TZ > /etc/timezone \
-    && export LOG_HOME = /app
+RUN ln -sf /usr/share/zoneinfo/$TZ &&\
+    echo $TZ > /etc/timezone &&\
+    export LOG_HOME = /app
 EXPOSE 8080
 WORKDIR /app
 COPY --from=build /usr/src/app/target/public-consumer.jar /app/app.jar

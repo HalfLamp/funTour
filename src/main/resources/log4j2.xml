@@ -10,7 +10,7 @@
     <!--全局属性-->
     <Properties>
         <Property name="APP_NAME">jsydspProvider</Property>
-        <Property name="LOG_FILE_PATH">S:/project/back/work/funTour/logs/consumer/public</Property>
+        <Property name="LOG_FILE_PATH">${LOG_HOME}/logs/consumer/public</Property>
         <Property name="PATTERN_FORMAT">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level trace-id:%X{traceId} %class{36} %L %M - %msg%xEx%n</Property>
     </Properties>
 

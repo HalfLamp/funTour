@@ -23,7 +23,7 @@ public class User implements Serializable {
     private String trend2;
     private String trend3;
     private String isProhibit;
-    private String prohibitEeason;
+    private String prohibitReason;
     private String regionId;
     private Integer age;
     private String sex;

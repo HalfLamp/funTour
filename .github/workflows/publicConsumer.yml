@@ -11,7 +11,7 @@ env:
   IMAGE: candengbanzhan/public-consumer:RELEASE
   NAME: public-consumer
   PORT: 8772
-  CONTAINERPATH: /app/S:/project/back/work/funTour/logs/consumer/public
+  CONTAINERPATH: /app/logs/consumer/public
   HOSTPATH: /usr/local/springboot/vol/user/java/consumer/public
 jobs:
   build:

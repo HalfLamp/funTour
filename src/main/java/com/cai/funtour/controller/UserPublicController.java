@@ -2,6 +2,7 @@ package com.cai.funtour.controller;
 
 import cn.hutool.core.io.FileTypeUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import com.cai.funtour.api.pub.UserService;
 import com.cai.funtour.config.UserConfig;
 import com.cai.funtour.config.WebConfig;
@@ -50,7 +51,7 @@ public class UserPublicController extends BaseController {
         log.info(user == null ? "userService is Null" : "userService is Ready");
         Result result = user.login(params.get("account"), params.get("password"));
         Map map = JSONObject.parseObject((String) result.getData(), Map.class);
-        User user = (User) map.get("user");
+        User user = JSONObject.parseObject(map.get("user").toString(), User.class, Feature.IgnoreNotMatch);
         map.put("token", UserConfig.getToken(user.getUserId()));
         return Result.toData(map);
     }

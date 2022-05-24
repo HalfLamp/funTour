@@ -47,7 +47,7 @@ public class UserPublicController extends BaseController {
     @ApiOperation("登录接口")
     @PostMapping("login")
     public Result login(@ApiParam("参数account，password") @RequestBody Map<String, String> params) {
-        log.debug(user == null ? "userService is Null" : "userService is Ready");
+        log.info(user == null ? "userService is Null" : "userService is Ready");
         Result result = user.login(params.get("account"), params.get("password"));
         Map map = JSONObject.parseObject((String) result.getData(), Map.class);
         User user = (User) map.get("user");

@@ -5,7 +5,6 @@ dubbo:
     nacosWithCustomGroup:
       protocol: nacos # 注册中心选择 nacos
       address: czytgc.com:8848 # nacos ip
-      group: FUNTOUR_DEV # nacos group, 默认 DEFAULT_GROUP
   protocols:
     dubbo:
       name: dubbo
@@ -14,6 +13,7 @@ dubbo:
     services:
       UserService:
         interface: com.cai.funtour.api.pub.UserService
+        filter: traceFilter
   logger:
     zap-config:
       level: error

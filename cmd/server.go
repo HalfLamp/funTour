@@ -20,15 +20,18 @@ package main
 import (
 	"dubbo.apache.org/dubbo-go/v3/config"
 	_ "dubbo.apache.org/dubbo-go/v3/imports"
+	"funtour/filters"
 	"funtour/service"
 )
 
-
-func init(){
+func init() {
 	config.SetProviderService(&service.UserService{})
 }
+
 // export DUBBO_GO_CONFIG_PATH= PATH_TO_SAMPLES/helloworld/go-server/conf/dubbogo.yaml
 func main() {
+	//
+	filters.Log()
 	if err := config.Load(); err != nil {
 		panic(err)
 	}

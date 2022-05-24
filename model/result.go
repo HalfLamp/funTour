@@ -3,12 +3,30 @@ package model
 import (
 	"encoding/json"
 	"funtour/tool"
+	hessian "github.com/apache/dubbo-go-hessian2"
 )
 
 type Result struct {
-	Code   int16  `json:"code"`
+	Code   int32  `json:"code"`
 	ErrMes string `json:"errMes"`
 	Data   string `json:"data"`
+}
+
+type Data struct {
+	result string `json:"data"`
+}
+
+func (d *Data) JavaClassName() string {
+	return "java.lang.Object"
+}
+
+func init() {
+	hessian.RegisterPOJO(&Result{})
+}
+
+//hessian序列化实现接口
+func (u *Result) JavaClassName() string {
+	return "com.cai.funtour.pojo.Result"
 }
 
 func Ok() *Result {
@@ -21,7 +39,7 @@ func Ok() *Result {
 	return r
 }
 
-func Error(code int16, errorMes string) *Result {
+func Error(code int32, errorMes string) *Result {
 	r := &Result{
 		Code:   code,
 		ErrMes: errorMes,

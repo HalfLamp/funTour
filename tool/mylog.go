@@ -38,16 +38,23 @@ func init() {
 }
 
 func Info(message ...interface{}) {
+	info.SetLevel("3")
+	fmt.Printf("info traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
 	v := fmt.Sprintf("traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
 	info.Info(v)
 }
 
 func Debug(message ...interface{}) {
+	info.SetLevel("2")
+	fmt.Printf("Debug traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
+
 	v := fmt.Sprintf("traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
 	debug.Info(v)
 }
 
 func Error(message ...interface{}) {
+	info.SetLevel("5")
+	fmt.Printf("ERROR! traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
 	v := fmt.Sprintf("traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
 	error.Info(v)
 }

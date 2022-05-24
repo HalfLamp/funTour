@@ -28,4 +28,4 @@ dubbo:
     # 订阅的服务，'*'表示所有，有多个用','分割
     subscribed-services: user-provider,file-provider,sight-provider,world-provider
   consumer:
-    check: true
+    check: false

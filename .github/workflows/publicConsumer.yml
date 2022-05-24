@@ -11,7 +11,8 @@ env:
   IMAGE: candengbanzhan/public-consumer:RELEASE
   NAME: public-consumer
   PORT: 8772
-
+  CONTAINERPATH: /app/S:/project/back/work/funTour/logs/consumer/public
+  HOSTPATH: /usr/local/springboot/vol/user/java/consumer/public
 jobs:
   build:
 
@@ -47,5 +48,5 @@ jobs:
           ssh root@czytgc.com "docker stop ${{ env.NAME }}"
           ssh root@czytgc.com "docker rm ${{ env.NAME }}"
           ssh root@czytgc.com "docker pull ${{ env.IMAGE }}"
-          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:8080 --name ${{ env.NAME }} ${{ env.IMAGE }}"
+          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:8080 --name ${{ env.NAME }} -v ${{env.HOSTPATH}}:${{env.CONTAINERPATH}} ${{ env.IMAGE }}"
 

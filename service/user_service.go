@@ -59,11 +59,22 @@ func (*UserService) CheckToken(key string) (*Result, error) {
 	}
 }
 
+// 获取系统参数
+func (*UserService) GetSystemParams(key string) (*Result, error) {
+	// 从缓存获取参数
+	cache, err := database.GetSystemCache(key)
+	if err != nil {
+		return Error(501, "获取参数出错"), err
+	}
+	return ToData(cache), nil
+}
+
 // MethodMapper 定义方法名映射，从 Go 的方法名映射到 Java 小写方法名，只有 dubbo 协议服务接口才需要使用
 func (s *UserService) MethodMapper() map[string]string {
 	return map[string]string{
-		"Login":      "login",
-		"Register":   "register",
-		"CheckToken": "checkToken",
+		"Login":           "login",
+		"Register":        "register",
+		"CheckToken":      "checkToken",
+		"GetSystemParams": "getSystemParams",
 	}
 }

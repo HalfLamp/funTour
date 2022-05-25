@@ -1,6 +1,9 @@
 package database
 
 import (
+	"context"
+	"fmt"
+	"funtour/query"
 	"funtour/tool"
 	"github.com/garyburd/redigo/redis"
 )
@@ -25,4 +28,35 @@ func init() {
 
 func GetConnect() redis.Conn {
 	return pool.Get()
+}
+
+// 查询系统参数缓存
+func GetSystemCache(key string) (string, error) {
+	redis := GetConnect()
+	reply, err := redis.Do("get", key)
+	if err != nil {
+		tool.Error("获取缓存出错", err)
+		return "", err
+	}
+
+	// 若缓存中有值
+	if reply != nil {
+		result := fmt.Sprintln(reply)
+		return result, nil
+	}
+
+	// 若缓存中无值
+	db := GetDb()
+	param := query.Use(db).Param
+	result, err := param.WithContext(context.TODO()).
+		Where(param.Key.Eq(key)).
+		First()
+	if err != nil {
+		tool.Error("查询数据库出错", err)
+		return "", err
+	}
+	// 设置缓存
+	redis.Do("setex", key, 43200, result.Value)
+	reply, _ = redis.Do("get", key)
+	return fmt.Sprintln(reply), nil
 }

@@ -21,7 +21,7 @@ class PublicConsumerApplicationTests {
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
 
-        System.out.println(publicKey.getPublicExponent());
+        System.out.println(JSONObject.toJSONString(publicKey));
         System.out.println(JSONObject.toJSONString(privateKey));
 
     }

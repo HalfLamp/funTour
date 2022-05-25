@@ -1,0 +1,4 @@
+I 2022/05/25 23:40:36 mylog.go:44: traceId: message:Mysql数据库连接成功： czy:Mysql@826525@tcp(czytgc.com:3307)/amusingtourdb?charset=utf8&parseTime=True&loc=Local&timeout=10s
+ 
+I 2022/05/25 23:40:36 mylog.go:44: traceId: message:初始化过滤器
+ 

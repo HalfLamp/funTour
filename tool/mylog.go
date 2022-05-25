@@ -13,39 +13,38 @@ var TraceId string
 
 func init() {
 	file := "./log/info.log"
-	infoOut, err := os.Open(file)
+	infoOut, err := os.OpenFile(file, os.O_RDWR, 0)
 	if err != nil {
 		panic(err)
 	}
-	gulu.Log.SetLevel("info")
 	info = gulu.Log.NewLogger(infoOut)
+	info.SetLevel("info")
 
 	debugFile := "./log/debug.log"
-	debugOut, err := os.Open(debugFile)
+	debugOut, err := os.OpenFile(debugFile, os.O_RDWR, 0)
 	if err != nil {
 		panic(err)
 	}
-	gulu.Log.SetLevel("debug")
 	debug = gulu.Log.NewLogger(debugOut)
+	debug.SetLevel("debug")
 
 	errorFile := "./log/debug.log"
-	errorOut, err := os.Open(errorFile)
+	errorOut, err := os.OpenFile(errorFile, os.O_RDWR, 0)
 	if err != nil {
 		panic(err)
 	}
-	gulu.Log.SetLevel("error")
 	error = gulu.Log.NewLogger(errorOut)
+	error.SetLevel("error")
+
 }
 
 func Info(message ...interface{}) {
-	info.SetLevel("3")
 	fmt.Printf("info traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
 	v := fmt.Sprintf("traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
 	info.Info(v)
 }
 
 func Debug(message ...interface{}) {
-	info.SetLevel("2")
 	fmt.Printf("Debug traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
 
 	v := fmt.Sprintf("traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
@@ -53,7 +52,6 @@ func Debug(message ...interface{}) {
 }
 
 func Error(message ...interface{}) {
-	info.SetLevel("5")
 	fmt.Printf("ERROR! traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
 	v := fmt.Sprintf("traceId:%s message:%s ", TraceId, fmt.Sprintln(message...))
 	error.Info(v)

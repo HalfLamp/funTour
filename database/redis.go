@@ -2,7 +2,6 @@ package database
 
 import (
 	"context"
-	"fmt"
 	"funtour/query"
 	"funtour/tool"
 	"github.com/garyburd/redigo/redis"
@@ -32,17 +31,23 @@ func GetConnect() redis.Conn {
 
 // 查询系统参数缓存
 func GetSystemCache(key string) (string, error) {
-	redis := GetConnect()
-	reply, err := redis.Do("get", key)
+	conn := GetConnect()
+
+	data, err := conn.Do("get", key)
 	if err != nil {
 		tool.Error("获取缓存出错", err)
 		return "", err
 	}
 
+	var reply string
 	// 若缓存中有值
-	if reply != nil {
-		result := fmt.Sprintln(reply)
-		return result, nil
+	if data != nil {
+		reply, err = redis.String(data, err)
+		if err != nil {
+			tool.Error("转化字符串出错", err)
+			return "", err
+		}
+		return reply, nil
 	}
 
 	// 若缓存中无值
@@ -56,7 +61,7 @@ func GetSystemCache(key string) (string, error) {
 		return "", err
 	}
 	// 设置缓存
-	redis.Do("setex", key, 43200, result.Value)
-	reply, _ = redis.Do("get", key)
-	return fmt.Sprintln(reply), nil
+	conn.Do("setex", key, 43200, result.Value)
+	reply, _ = redis.String(conn.Do("get", key))
+	return reply, nil
 }

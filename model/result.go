@@ -2,6 +2,7 @@ package model
 
 import (
 	"encoding/json"
+	"fmt"
 	"funtour/tool"
 	hessian "github.com/apache/dubbo-go-hessian2"
 )
@@ -35,7 +36,7 @@ func Ok() *Result {
 		ErrMes: "",
 		Data:   "",
 	}
-	tool.Info("响应结果:", r)
+	tool.Info("封装结果:", r)
 	return r
 }
 
@@ -45,18 +46,26 @@ func Error(code int32, errorMes string) *Result {
 		ErrMes: errorMes,
 		Data:   "",
 	}
-	tool.Info("响应结果:", r)
+	tool.Info("封装结果:", r)
 	return r
 }
 
 func ToData(result interface{}) *Result {
-	data, _ := json.Marshal(&result)
+	var data string
+	switch result.(type) {
+	case string:
+		data = fmt.Sprintln(result)
+	default:
+		result, _ := json.Marshal(&result)
+		data = string(result)
+	}
+
 	r := &Result{
 		Code:   200,
 		ErrMes: "",
-		Data:   string(data),
+		Data:   data,
 	}
-	tool.Info("响应结果:", result)
+	tool.Info("封装结果:", result)
 	return r
 }
 
@@ -69,6 +78,6 @@ func ToDataWithName(name string, result interface{}) *Result {
 		ErrMes: "",
 		Data:   string(data),
 	}
-	tool.Info("响应结果:", result)
+	tool.Info("封装结果:", result)
 	return r
 }

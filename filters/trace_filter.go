@@ -5,6 +5,7 @@ import (
 	"dubbo.apache.org/dubbo-go/v3/common/extension"
 	"dubbo.apache.org/dubbo-go/v3/filter"
 	"dubbo.apache.org/dubbo-go/v3/protocol"
+	"encoding/json"
 	"fmt"
 	"funtour/tool"
 )
@@ -21,13 +22,14 @@ type MyFilter struct {
 }
 
 func (f *MyFilter) Invoke(ctx context.Context, invoker protocol.Invoker, invocation protocol.Invocation) protocol.Result {
-	tool.Info("MyClientFilter Invoke is called, method Name = ", invocation.MethodName())
 	tool.TraceId = fmt.Sprint(ctx.Value("traceId"))
+	tool.Info("MyClientFilter Invoke is called, method Name = ", invocation.MethodName())
 	return invoker.Invoke(ctx, invocation)
 }
 
 func (f *MyFilter) OnResponse(ctx context.Context, result protocol.Result, invoker protocol.Invoker, protocol protocol.Invocation) protocol.Result {
-	tool.Info("响应结果：", result)
+	res, _ := json.Marshal(result)
+	tool.Info("响应结果：", string(res))
 	return result
 }
 

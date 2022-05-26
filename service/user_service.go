@@ -28,8 +28,6 @@ func (*UserService) Login(account string, password string) (*Result, error) {
 }
 
 func (*UserService) Register(user User) (*Result, error) {
-	tool.Info("请求参数:", user)
-
 	if len(user.Password) == 0 || (len(user.Email) == 0 && len(user.Phone) == 0) {
 		return Error(202, "信息不完整"), nil
 	}
@@ -39,7 +37,7 @@ func (*UserService) Register(user User) (*Result, error) {
 	u := query.Use(database.GetDb()).User
 	err := u.WithContext(context.TODO()).Select(u.ALL).Create(&user)
 	if err != nil {
-		return Error(111, "注册失败"), nil
+		return Error(200, "注册失败"), nil
 	}
 
 	return ToDataWithName("user", user), nil

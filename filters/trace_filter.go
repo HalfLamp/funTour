@@ -2,6 +2,7 @@ package filters
 
 import (
 	"context"
+	"dubbo.apache.org/dubbo-go/v3/common/constant"
 	"dubbo.apache.org/dubbo-go/v3/common/extension"
 	"dubbo.apache.org/dubbo-go/v3/filter"
 	"dubbo.apache.org/dubbo-go/v3/protocol"
@@ -22,7 +23,9 @@ type MyFilter struct {
 }
 
 func (f *MyFilter) Invoke(ctx context.Context, invoker protocol.Invoker, invocation protocol.Invocation) protocol.Result {
-	tool.TraceId = fmt.Sprint(ctx.Value("traceId"))
+	m := ctx.Value(constant.DubboCtxKey("attachment")).(map[string]interface{})
+	fmt.Println(m)
+	tool.TraceId = fmt.Sprint(m["traceId"])
 	tool.Info("MyClientFilter Invoke is called, method Name = ", invocation.MethodName())
 	return invoker.Invoke(ctx, invocation)
 }

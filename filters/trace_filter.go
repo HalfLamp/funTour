@@ -26,7 +26,9 @@ func (f *MyFilter) Invoke(ctx context.Context, invoker protocol.Invoker, invocat
 	m := ctx.Value(constant.DubboCtxKey("attachment")).(map[string]interface{})
 	fmt.Println(m)
 	tool.TraceId = fmt.Sprint(m["traceId"])
-	tool.Info("MyClientFilter Invoke is called, method Name = ", invocation.MethodName())
+	tool.Info("dubbo调用方法名称：", invocation.MethodName())
+	marshal, _ := json.Marshal(invocation.Arguments())
+	tool.Info("方法参数: ", string(marshal))
 	return invoker.Invoke(ctx, invocation)
 }
 

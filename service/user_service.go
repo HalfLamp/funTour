@@ -27,15 +27,15 @@ func (*UserService) Login(account string, password string) (*Result, error) {
 	}
 }
 
-func (*UserService) Register(user User) (*Result, error) {
+func (*UserService) Register(user *User) (*Result, error) {
 	if len(user.Password) == 0 || (len(user.Email) == 0 && len(user.Phone) == 0) {
 		return Error(202, "信息不完整"), nil
 	}
 	userid := tool.GetUUID()
-	user.UserID = userid
+	user.UserId = userid
 
 	u := query.Use(database.GetDb()).User
-	err := u.WithContext(context.TODO()).Select(u.ALL).Create(&user)
+	err := u.WithContext(context.TODO()).Select(u.ALL).Create(user)
 	if err != nil {
 		return Error(200, "注册失败"), nil
 	}
@@ -57,6 +57,11 @@ func (*UserService) CheckToken(key string) (*Result, error) {
 	}
 }
 
+//TODO 设置缓存
+func (*UserService) SetCache(key string, value string) (*Result, error) {
+	return Ok(), nil
+}
+
 // 获取系统参数
 func (*UserService) GetSystemParams(key string) (*Result, error) {
 	// 从缓存获取参数
@@ -67,12 +72,34 @@ func (*UserService) GetSystemParams(key string) (*Result, error) {
 	return ToData(cache), nil
 }
 
+// 更改用户信息
+func (*UserService) ChangeUserMessage(user *User) (*Result, error) {
+	if user.UserId == "" {
+		return Error(301, "用户id不正确"), nil
+	}
+
+	query := query.Use(database.GetDb()).User
+	update, err := query.WithContext(context.TODO()).Where(query.UserID.Eq(user.UserId)).Updates(user)
+	if err != nil {
+		tool.Error("更新用户数据失败", err)
+		return Error(503, "更新用户数据报错"), err
+	}
+
+	if update.RowsAffected < 1 {
+		tool.Info("更新数据条数小于1条!!!")
+		return Error(502, "更新数据条数小于1"), err
+	}
+
+	return Ok(), nil
+}
+
 // MethodMapper 定义方法名映射，从 Go 的方法名映射到 Java 小写方法名，只有 dubbo 协议服务接口才需要使用
 func (s *UserService) MethodMapper() map[string]string {
 	return map[string]string{
-		"Login":           "login",
-		"Register":        "register",
-		"CheckToken":      "checkToken",
-		"GetSystemParams": "getSystemParams",
+		"Login":             "login",
+		"Register":          "register",
+		"CheckToken":        "checkToken",
+		"GetSystemParams":   "getSystemParams",
+		"ChangeUserMessage": "changeUserMessage",
 	}
 }

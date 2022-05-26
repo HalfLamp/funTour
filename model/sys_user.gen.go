@@ -5,6 +5,7 @@
 package model
 
 import (
+	hessian "github.com/apache/dubbo-go-hessian2"
 	"time"
 )
 
@@ -13,7 +14,7 @@ const TableNameUser = "sys_user"
 // User mapped from table <sys_user>
 type User struct {
 	ID             int64     `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`                        // 主键
-	UserID         string    `gorm:"column:user_id" json:"user_id"`                                            // 用户id
+	UserId         string    `gorm:"column:user_id" json:"userId"`                                             // 用户id
 	Name           string    `gorm:"column:name" json:"name"`                                                  // 用户名
 	Phone          string    `gorm:"column:phone" json:"phone"`                                                // 手机号
 	Password       string    `gorm:"column:password" json:"password"`                                          // 密码
@@ -38,4 +39,12 @@ type User struct {
 // TableName User's table name
 func (*User) TableName() string {
 	return TableNameUser
+}
+
+func (u *User) JavaClassName() string {
+	return "com.cai.funtour.po.User"
+}
+
+func init() {
+	hessian.RegisterPOJO(&User{})
 }

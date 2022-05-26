@@ -28,7 +28,7 @@ func init() {
 	debug = gulu.Log.NewLogger(debugOut)
 	debug.SetLevel("debug")
 
-	errorFile := "./log/debug.log"
+	errorFile := "./log/error.log"
 	errorOut, err := os.OpenFile(errorFile, os.O_RDWR, 0)
 	if err != nil {
 		panic(err)

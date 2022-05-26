@@ -16,10 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -86,6 +83,17 @@ public class UserPublicController extends BaseController {
         }
 
         return Result.toData(map);
+    }
+
+    @ApiOperation("更改用户信息")
+    @PutMapping
+    public Result changeUserMessage(@RequestBody User params) {
+        Result result = user.changeUserMessage(params);
+        if (result.getCode() != 200){
+            return Result.error(result.getCode(), "更新失败");
+        }else {
+            return Result.ok();
+        }
     }
 
 }

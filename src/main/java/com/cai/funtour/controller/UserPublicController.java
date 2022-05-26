@@ -4,14 +4,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.cai.funtour.api.pub.UserService;
 import com.cai.funtour.config.UserConfig;
+import com.cai.funtour.filter.HttpTraceInfoFilter;
 import com.cai.funtour.po.User;
 import com.cai.funtour.pojo.Result;
 import com.cai.funtour.tools.BaseController;
+import com.cai.funtour.tools.Tools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
+import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,11 +44,17 @@ public class UserPublicController extends BaseController {
     @ApiOperation("登录接口")
     @PostMapping("login")
     public Result login(@ApiParam("参数account，password") @RequestBody Map<String, String> params) {
+
         log.info(user == null ? "userService is Null" : "userService is Ready");
         Result result = user.login(params.get("account"), params.get("password"));
         Map map = JSONObject.parseObject((String) result.getData(), Map.class);
+        // 为空代表没有取得用户数据。
+        if (map == null || map.isEmpty()){
+            return result;
+        }
         User user = JSONObject.parseObject(map.get("user").toString(), User.class, Feature.IgnoreNotMatch);
 
+        // 生成token
         try {
             map.put("token", userConfig.getToken(user.getUserId()));
         } catch (Exception e) {
@@ -62,7 +71,13 @@ public class UserPublicController extends BaseController {
 
         Result result = user.register(params);
         Map map = JSONObject.parseObject((String) result.getData(), Map.class);
-        User user = (User) map.get("user");
+        // 为空代表没有取得用户数据。
+        if (map == null || map.isEmpty()){
+            return result;
+        }
+        User user = JSONObject.parseObject(map.get("user").toString(), User.class, Feature.IgnoreNotMatch);
+
+        // 生成token
         try {
             map.put("token", userConfig.getToken(user.getUserId()));
         } catch (Exception e) {

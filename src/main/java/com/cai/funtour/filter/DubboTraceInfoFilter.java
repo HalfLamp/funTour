@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 
 @Slf4j
-@Activate(group = {"consumer"})
+@Activate
 @Component
 public class DubboTraceInfoFilter implements Filter {
 
@@ -25,6 +25,7 @@ public class DubboTraceInfoFilter implements Filter {
         String traceId = HttpTraceInfoFilter.traceThreadLocal.get();
         if (traceId != null){
             RpcContext.getContext().setAttachment(Tools.TRACE_ID, traceId);
+            log.info(RpcContext.getContext().toString());
         }
         return invoker.invoke(invocation);
     }

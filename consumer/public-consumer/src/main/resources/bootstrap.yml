@@ -1,5 +1,5 @@
 server:
-  port: 8889
+  port: 8080
   servlet:
     context-path: /public
 spring:
@@ -26,6 +26,7 @@ dubbo:
     address: nacos://czytgc.com:8848
   cloud:
     # 订阅的服务，'*'表示所有，有多个用','分割
-    subscribed-services: user-provider,file-provider,sight-provider,world-provider
+    subscribed-services: "*"
   consumer:
     check: false
+    filter: traceId

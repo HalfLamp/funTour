@@ -13,4 +13,5 @@ public interface UserService {
     Result register(User user);
     Result checkToken(String key);
     Result getSystemParams(String key);
+    Result changeUserMessage(User user);
 }

@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class User implements Serializable {
-    private Integer id;
+    private String id;
     private String userId;
     private String name;
     private String phone;

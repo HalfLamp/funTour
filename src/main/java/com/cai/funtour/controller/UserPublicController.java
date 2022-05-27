@@ -64,7 +64,7 @@ public class UserPublicController extends BaseController {
 
     @ApiOperation("登录接口")
     @PostMapping("/register")
-    public Result register(@RequestBody User params) {
+    public Result register(@ApiParam("email/phone；password必填") @RequestBody User params) {
 
         Result result = user.register(params);
         Map map = JSONObject.parseObject((String) result.getData(), Map.class);
@@ -87,7 +87,7 @@ public class UserPublicController extends BaseController {
 
     @ApiOperation("更改用户信息")
     @PutMapping
-    public Result changeUserMessage(@RequestBody User params) {
+    public Result changeUserMessage(@ApiParam("userId必填，其余的字段 传则更改，不传则不更改") @RequestBody User params) {
         Result result = user.changeUserMessage(params);
         if (result.getCode() != 200){
             return Result.error(result.getCode(), "更新失败");

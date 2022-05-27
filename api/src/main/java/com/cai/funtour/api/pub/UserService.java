@@ -14,4 +14,5 @@ public interface UserService {
     Result checkToken(String key);
     Result getSystemParams(String key);
     Result changeUserMessage(User user);
+    Result setCache(String key, String value, String expireTime);
 }

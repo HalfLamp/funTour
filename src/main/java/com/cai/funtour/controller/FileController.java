@@ -37,7 +37,7 @@ public class FileController {
     // 文件上传路径
     @Value("${upload.path}")
     private String path;
-    private final String URL_PRE = "http://czytgc:8080/public/file/";
+    private final String URL_PRE = "http://czytgc:8771/public/images/";
 
     @ApiOperation("图片上传")
     @PostMapping("/images")

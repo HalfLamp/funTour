@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
 import org.apache.dubbo.rpc.RpcContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,6 @@ public class UserPublicController extends BaseController {
     @ApiOperation("登录接口")
     @PostMapping("login")
     public Result login(@ApiParam("参数account，password") @RequestBody Map<String, String> params) {
-
-        log.info(user == null ? "userService is Null" : "userService is Ready");
         Result result = user.login(params.get("account"), params.get("password"));
         Map map = JSONObject.parseObject((String) result.getData(), Map.class);
         // 为空代表没有取得用户数据。
@@ -57,6 +56,12 @@ public class UserPublicController extends BaseController {
         } catch (Exception e) {
             log.error("未正确生成token", e);
             return Result.error(407, "未生成token");
+        }
+
+        // 添加redis缓存
+        if (StringUtils.isNotBlank(map.get("token").toString())){
+            String key = user.getUserId() + "_" + map.get("token").toString();
+            this.user.setCache(key, JSONObject.toJSONString(user), String.valueOf(60*30));
         }
 
         return Result.toData(map);
@@ -80,6 +85,12 @@ public class UserPublicController extends BaseController {
         } catch (Exception e) {
             log.error("未正确生成token");
             return Result.error(407, "未生成token");
+        }
+
+        // 添加redis缓存
+        if (StringUtils.isNotBlank(map.get("token").toString())){
+            String key = user.getUserId() + "_" + map.get("token").toString();
+            this.user.setCache(key, JSONObject.toJSONString(user), String.valueOf(60*30));
         }
 
         return Result.toData(map);

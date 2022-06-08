@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,18 +44,24 @@ public class FileController {
     @PostMapping("/images")
     public Result uploadImages(@ApiParam("图片数组") MultipartFile images[]) throws IOException {
         List<String> urls = new ArrayList<>();
+        String errorMes = "";
         for (MultipartFile image : images) {
             InputStream inputStream = image.getInputStream();
             String type = FileTypeUtil.getType(inputStream);
             String[] split = imageTypes.split(",");
             // 判断文件类型是否支持
-            if (Arrays.asList(imageTypes.split(",")).contains(type)){
+            if (Arrays.asList(imageTypes.split(",")).contains(type)) {
                 String fileName = TraceId.getTraceId() + "." + type;
                 File file = new File(path, fileName);
                 image.transferTo(file);
                 urls.add(URL_PRE + fileName);
+            } else {
+                errorMes = "有图片未上传，有不支持的类型";
             }
         }
-        return Result.toData("images", urls);
+        Result result = Result.toData("images", urls);
+        result.setErrMes(errorMes);
+        return result;
+
     }
 }

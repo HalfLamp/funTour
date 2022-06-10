@@ -1,23 +1,20 @@
 package com.cai.funtour.filter;
 
 import com.cai.funtour.tools.Tools;
-import com.cai.funtour.tools.TraceId;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
 
 /**
  * @author ：caizhiyuan
- * @date ：Created in 2022/4/21 15:01
- * @description：为dubbo请求添加traceid
+ * @date ：Created in 2022/6/10 15:49
+ * @description：为Dubbo请求添加traceId
  */
-
 @Slf4j
-@Activate
 @Component
+@Activate
 public class DubboTraceInfoFilter implements Filter {
 
     @Override

@@ -2,7 +2,3 @@ logging:
   level:
     root: info
   config: classpath:log4j2.xml
-upload:
-  path: /app/images/
-#  path: S:\project\back\work\images\
-  types: jpg,jpeg,png,gif

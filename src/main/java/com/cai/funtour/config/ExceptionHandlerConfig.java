@@ -10,10 +10,9 @@ import java.util.Arrays;
 
 /**
  * @author ：caizhiyuan
- * @date ：Created in 2022/4/21 17:26
- * @description：异常处理类
+ * @date ：Created in 2022/6/10 15:55
+ * @description：全局错误统一处理类
  */
-
 @Slf4j
 @RestControllerAdvice
 public class ExceptionHandlerConfig {

@@ -1,13 +1,13 @@
 server:
   port: 8080
   servlet:
-    context-path: /public
+    context-path: /sight
 spring:
   # 解决循环依赖
   main:
     allow-circular-references: true
   application:
-    name: public-consumer
+    name: sight-consumer
   cloud:
     nacos:
       discovery:

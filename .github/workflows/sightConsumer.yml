@@ -1,20 +1,20 @@
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Java CI with Maven
+name: sight-consumer
 
 on:
   push:
     tags:
-      - public.consumer.release.v*
+      - sight.consumer.release.v*
 env:
-  IMAGE: candengbanzhan/public-consumer:RELEASE
-  NAME: public-consumer
-  PORT: 8772
-  CONTAINERPATH: /app/logs/consumer/public
-  HOSTPATH: /usr/local/springboot/vol/user/java/consumer/public
-  IMAGEPATH: /app/images
-  IMAGEHOSTPATH: /usr/local/springboot/vol/user/images
+  IMAGE: candengbanzhan/sight-consumer:RELEASE
+  NAME: sight-consumer
+  PORT: 8773
+  CONTAINERPATH: /app/logs/consumer/sight
+  HOSTPATH: /usr/local/springboot/vol/user/java/consumer/sight
+  MAVENHOSTPATH: /usr/local/springboot/vol/user/java/repository
+  MAVENCONTAINERPATH: /root/.m2/repository
 
 jobs:
   build:
@@ -52,5 +52,5 @@ jobs:
           ssh root@czytgc.com "docker rm ${{ env.NAME }}"
           ssh root@czytgc.com "docker rmi ${{ env.IMAGE }}"
           ssh root@czytgc.com "docker pull ${{ env.IMAGE }}"
-          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:8080 --name ${{ env.NAME }} -v ${{env.HOSTPATH}}:${{env.CONTAINERPATH}} -v ${{env.IMAGEHOSTPATH}}:${{env.IMAGEPATH}} ${{ env.IMAGE }}"
+          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:8080 --name ${{ env.NAME }} -v ${{env.HOSTPATH}}:${{env.CONTAINERPATH}} -v ${{env.MAVENHOSTPATH}}:${{MAVENCONTAINERPATH}} ${{ env.IMAGE }}"
 

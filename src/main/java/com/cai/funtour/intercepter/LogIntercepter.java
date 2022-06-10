@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author ：caizhiyuan
- * @date ：Created in 2022/4/21 17:04
+ * @date ：Created in 2022/6/10 15:43
  * @description：日志记录拦截器
  */
-@Slf4j
 @Component
+@Slf4j
 public class LogIntercepter implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -22,10 +22,5 @@ public class LogIntercepter implements HandlerInterceptor {
         String token = request.getHeader(Tools.TOKEN);
         log.info("请求路径： {}；用户token：{}", path, token);
         return true;
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }

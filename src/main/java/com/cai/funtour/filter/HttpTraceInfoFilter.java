@@ -3,7 +3,7 @@ package com.cai.funtour.filter;
 import com.cai.funtour.tools.Tools;
 import com.cai.funtour.tools.TraceId;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.common.utils.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.core.annotation.Order;
@@ -16,15 +16,14 @@ import java.io.IOException;
 
 /**
  * @author ：caizhiyuan
- * @date ：Created in 2022/4/21 15:28
- * @description：从Http请求中获取traceId
+ * @date ：Created in 2022/6/10 15:44
+ * @description：从http请求中获取traceId
  */
 @Slf4j
-@WebFilter(filterName = "traceIdFilter", urlPatterns = "/")
-@Order(0)
 @Component
+@Order(0)
+@WebFilter(filterName = "traceIdFilter", urlPatterns = "/")
 public class HttpTraceInfoFilter implements Filter {
-
     public static final ThreadLocal<String> traceThreadLocal = new NamedThreadLocal<>("TraceId-ThreadLocal");
 
     @Override

@@ -7,7 +7,6 @@ RUN mvn package
 FROM openjdk:8
 #定义时区
 ENV TZ=Asia/Shanghai
-ENV JAR public-consumer.jar
 #强行创建软连接更改时间,更改时间
 RUN ln -sf /usr/share/zoneinfo/$TZ &&\
     echo $TZ > /etc/timezone &&\

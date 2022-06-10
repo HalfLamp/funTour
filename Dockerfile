@@ -13,5 +13,5 @@ RUN ln -sf /usr/share/zoneinfo/$TZ &&\
     export LOG_HOME=/app
 EXPOSE 8080
 WORKDIR /app
-COPY --from=build /usr/src/app/target/public-consumer.jar /app/app.jar
+COPY --from=build /usr/src/app/target/sight-consumer.jar /app/app.jar
 ENTRYPOINT ["nohup","java","-jar","/app/app.jar","&"]

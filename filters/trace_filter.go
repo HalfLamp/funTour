@@ -8,6 +8,7 @@ import (
 	"dubbo.apache.org/dubbo-go/v3/protocol"
 	"encoding/json"
 	"fmt"
+	"funtour/model"
 	"funtour/tool"
 )
 
@@ -33,6 +34,9 @@ func (f *MyFilter) Invoke(ctx context.Context, invoker protocol.Invoker, invocat
 }
 
 func (f *MyFilter) OnResponse(ctx context.Context, result protocol.Result, invoker protocol.Invoker, protocol protocol.Invocation) protocol.Result {
+	if result.Result() == nil {
+		result.SetResult(model.Error(500, "未知错误"))
+	}
 	res, _ := json.Marshal(result)
 	tool.Info("响应结果：", string(res))
 	return result

@@ -1,4 +1,110 @@
-I 2022/05/25 23:40:36 mylog.go:44: traceId: message:Mysql数据库连接成功： czy:Mysql@826525@tcp(czytgc.com:3307)/amusingtourdb?charset=utf8&parseTime=True&loc=Local&timeout=10s
+I 2022/05/27 15:10:32 mylog.go:44: traceId: message:Mysql数据库连接成功： czy:Mysql@826525@tcp(czytgc.com:3307)/amusingtourdb?charset=utf8&parseTime=True&loc=Local&timeout=10s
  
-I 2022/05/25 23:40:36 mylog.go:44: traceId: message:初始化过滤器
+I 2022/05/27 15:10:32 mylog.go:44: traceId: message:初始化过滤器
+ 
+I 2022/05/27 15:11:01 mylog.go:44: traceId:3546113785dec44e20640c88a677615979a5929 message:dubbo调用方法名称： changeUserMessage
+ 
+I 2022/05/27 15:11:01 mylog.go:44: traceId:3546113785dec44e20640c88a677615979a5929 message:方法参数:  [{"id":0,"userId":"328c5365-1174-47b8-85ed-c048110fa09811946","name":"","phone":"","password":"","trend1":"","trend2":"","trend3":"","is_prohibit":"","prohibit_reason":"","region_id":"","age":0,"sex":"3","icon":"","image":"","sign":"","email":"","is_member":"","extra":"","create_time":"0001-01-01T00:00:00Z","update_time":"0001-01-01T00:00:00Z"}]
+ 
+I 2022/05/27 15:11:01 mylog.go:44: traceId:3546113785dec44e20640c88a677615979a5929 message:更新数据条数小于1条!!!
+ 
+I 2022/05/27 15:11:01 mylog.go:44: traceId:3546113785dec44e20640c88a677615979a5929 message:封装结果: &{502 更新数据条数小于1 }
+ 
+I 2022/05/27 15:11:01 mylog.go:44: traceId:3546113785dec44e20640c88a677615979a5929 message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:50115","remote.application":"public-consumer","traceId":"3546113785dec44e20640c88a677615979a5929","version":"0.0.0"},"Err":null,"Rest":{"code":502,"errMes":"更新数据条数小于1","data":""}}
+ 
+I 2022/05/27 15:13:43 mylog.go:44: traceId:3562307ed48db25ed504e24b2a6a71f54bdcd0d message:dubbo调用方法名称： changeUserMessage
+ 
+I 2022/05/27 15:13:43 mylog.go:44: traceId:3562307ed48db25ed504e24b2a6a71f54bdcd0d message:方法参数:  [{"id":0,"userId":"328c5365-1174-47b8-85ed-c048110fa09811946","name":"","phone":"","password":"","trend1":"","trend2":"","trend3":"","is_prohibit":"","prohibit_reason":"","region_id":"","age":0,"sex":"5","icon":"","image":"","sign":"","email":"","is_member":"","extra":"","create_time":"0001-01-01T00:00:00Z","update_time":"0001-01-01T00:00:00Z"}]
+ 
+I 2022/05/27 15:13:43 mylog.go:44: traceId:3562307ed48db25ed504e24b2a6a71f54bdcd0d message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/05/27 15:13:43 mylog.go:44: traceId:3562307ed48db25ed504e24b2a6a71f54bdcd0d message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/05/27 15:13:43 mylog.go:44: traceId:3562307ed48db25ed504e24b2a6a71f54bdcd0d message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:50115","remote.application":"public-consumer","traceId":"3562307ed48db25ed504e24b2a6a71f54bdcd0d","version":"0.0.0"},"Err":null,"Rest":null}
+ 
+s":"更新数据条数小于1","data":""}}
+ 
+I 2022/05/27 15:09:27 mylog.go:44: traceId:3536754e4e1ee50e4df49038748a6766de7433a message:dubbo调用方法名称： changeUserMessage
+ 
+I 2022/05/27 15:09:27 mylog.go:44: traceId:3536754e4e1ee50e4df49038748a6766de7433a message:方法参数:  [{"id":0,"userId":"328c5365-1174-47b8-85ed-c048110fa09811946","name":"","phone":"","password":"","trend1":"","trend2":"","trend3":"","is_prohibit":"","prohibit_reason":"","region_id":"","age":0,"sex":"3","icon":"","image":"","sign":"","email":"","is_member":"","extra":"","create_time":"0001-01-01T00:00:00Z","update_time":"0001-01-01T00:00:00Z"}]
+ 
+I 2022/05/27 15:09:28 mylog.go:44: traceId:3536754e4e1ee50e4df49038748a6766de7433a message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/05/27 15:09:28 mylog.go:44: traceId:3536754e4e1ee50e4df49038748a6766de7433a message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/05/27 15:09:28 mylog.go:44: traceId:3536754e4e1ee50e4df49038748a6766de7433a message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:64729","remote.application":"public-consumer","traceId":"3536754e4e1ee50e4df49038748a6766de7433a","version":"0.0.0"},"Err":null,"Rest":null}
+ 
+001-01-01T00:00:00Z"}]
+ 
+I 2022/05/27 15:07:27 mylog.go:44: traceId:35244297139eb5d15ef4ca49738c44fa5150ff0 message:方法参数:  [{"id":0,"userId":"328c5365-1174-47b8-85ed-c048110fa09811946","name":"","phone":"","password":"","trend1":"","trend2":"","trend3":"","is_prohibit":"","prohibit_reason":"","region_id":"","age":0,"sex":"1","icon":"","image":"","sign":"","email":"","is_member":"","extra":"","create_time":"0001-01-01T00:00:00Z","update_time":"0001-01-01T00:00:00Z"}]
+ 
+I 2022/05/27 15:07:34 mylog.go:44: traceId:35244297139eb5d15ef4ca49738c44fa5150ff0 message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/05/27 15:07:47 mylog.go:44: traceId:35244297139eb5d15ef4ca49738c44fa5150ff0 message:更新数据条数小于1条!!!
+ 
+I 2022/05/27 15:07:47 mylog.go:44: traceId:35244297139eb5d15ef4ca49738c44fa5150ff0 message:封装结果: &{502 更新数据条数小于1 }
+ 
+I 2022/05/27 15:07:47 mylog.go:44: traceId:35244297139eb5d15ef4ca49738c44fa5150ff0 message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:53014","remote.application":"public-consumer","traceId":"35244297139eb5d15ef4ca49738c44fa5150ff0","version":"0.0.0"},"Err":null,"Rest":{"code":502,"errMes":"更新数据条数小于1","data":""}}
+ 
+I 2022/05/27 15:07:47 mylog.go:44: traceId:35244297139eb5d15ef4ca49738c44fa5150ff0 message:更新数据条数小于1条!!!
+ 
+I 2022/05/27 15:07:47 mylog.go:44: traceId:35244297139eb5d15ef4ca49738c44fa5150ff0 message:封装结果: &{502 更新数据条数小于1 }
+ 
+I 2022/05/27 15:07:47 mylog.go:44: traceId:35244297139eb5d15ef4ca49738c44fa5150ff0 message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:53014","remote.application":"public-consumer","traceId":"35244297139eb5d15ef4ca49738c44fa5150ff0","version":"0.0.0"},"Err":null,"Rest":{"code":502,"errMes":"更新数据条数小于1","data":""}}
+ 
+I 2022/05/27 15:07:47 mylog.go:44: traceId:35244297139eb5d15ef4ca49738c44fa5150ff0 message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/05/27 15:07:55 mylog.go:44: traceId:35244297139eb5d15ef4ca49738c44fa5150ff0 message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:53014","remote.application":"public-consumer","traceId":"35244297139eb5d15ef4ca49738c44fa5150ff0","version":"0.0.0"},"Err":null,"Rest":null}
+ 
+:更新数据条数小于1条!!!
+ 
+I 2022/05/27 15:02:56 mylog.go:44: traceId:3494251217ea2c3a39941b88dc304fb6ad8b4db message:封装结果: &{502 更新数据条数小于1 }
+ 
+I 2022/05/27 15:02:56 mylog.go:44: traceId:3494251217ea2c3a39941b88dc304fb6ad8b4db message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:52709","remote.application":"public-consumer","traceId":"3494251217ea2c3a39941b88dc304fb6ad8b4db","version":"0.0.0"},"Err":null,"Rest":{"code":502,"errMes":"更新数据条数小于1","data":""}}
+ 
+I 2022/05/27 15:02:57 mylog.go:44: traceId:3494251217ea2c3a39941b88dc304fb6ad8b4db message:更新数据条数小于1条!!!
+ 
+I 2022/05/27 15:02:57 mylog.go:44: traceId:3494251217ea2c3a39941b88dc304fb6ad8b4db message:封装结果: &{502 更新数据条数小于1 }
+ 
+I 2022/05/27 15:02:57 mylog.go:44: traceId:3494251217ea2c3a39941b88dc304fb6ad8b4db message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:52709","remote.application":"public-consumer","traceId":"3494251217ea2c3a39941b88dc304fb6ad8b4db","version":"0.0.0"},"Err":null,"Rest":{"code":502,"errMes":"更新数据条数小于1","data":""}}
+ 
+I 2022/05/27 15:03:07 mylog.go:44: traceId:3498704f285f3843e5040dca70edeccf9b6bf6e message:dubbo调用方法名称： changeUserMessage
+ 
+I 2022/05/27 15:03:07 mylog.go:44: traceId:3498704f285f3843e5040dca70edeccf9b6bf6e message:方法参数:  [{"id":0,"userId":"328c5365-1174-47b8-85ed-c048110fa09811946","name":"","phone":"","password":"","trend1":"","trend2":"","trend3":"","is_prohibit":"","prohibit_reason":"","region_id":"","age":0,"sex":"0","icon":"","image":"","sign":"","email":"","is_member":"","extra":"","create_time":"0001-01-01T00:00:00Z","update_time":"0001-01-01T00:00:00Z"}]
+ 
+I 2022/05/27 15:03:07 mylog.go:44: traceId:3498704f285f3843e5040dca70edeccf9b6bf6e message:更新数据条数小于1条!!!
+ 
+I 2022/05/27 15:03:07 mylog.go:44: traceId:3498704f285f3843e5040dca70edeccf9b6bf6e message:封装结果: &{502 更新数据条数小于1 }
+ 
+I 2022/05/27 15:03:07 mylog.go:44: traceId:3498704f285f3843e5040dca70edeccf9b6bf6e message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:52709","remote.application":"public-consumer","traceId":"3498704f285f3843e5040dca70edeccf9b6bf6e","version":"0.0.0"},"Err":null,"Rest":{"code":502,"errMes":"更新数据条数小于1","data":""}}
+ 
+I 2022/05/27 15:03:15 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:dubbo调用方法名称： changeUserMessage
+ 
+I 2022/05/27 15:03:15 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:方法参数:  [{"id":0,"userId":"328c5365-1174-47b8-85ed-c048110fa09811946","name":"","phone":"","password":"","trend1":"","trend2":"","trend3":"","is_prohibit":"","prohibit_reason":"","region_id":"","age":0,"sex":"0","icon":"","image":"","sign":"","email":"","is_member":"","extra":"","create_time":"0001-01-01T00:00:00Z","update_time":"0001-01-01T00:00:00Z"}]
+ 
+I 2022/05/27 15:03:15 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:更新数据条数小于1条!!!
+ 
+I 2022/05/27 15:03:15 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:封装结果: &{502 更新数据条数小于1 }
+ 
+I 2022/05/27 15:03:18 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:52709","remote.application":"public-consumer","traceId":"3499502db19ed3aa18c4a2eb552dc7c827fc56c","version":"0.0.0"},"Err":null,"Rest":{"code":502,"errMes":"更新数据条数小于1","data":""}}
+ 
+I 2022/05/27 15:03:18 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:dubbo调用方法名称： changeUserMessage
+ 
+I 2022/05/27 15:03:18 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:方法参数:  [{"id":0,"userId":"328c5365-1174-47b8-85ed-c048110fa09811946","name":"","phone":"","password":"","trend1":"","trend2":"","trend3":"","is_prohibit":"","prohibit_reason":"","region_id":"","age":0,"sex":"0","icon":"","image":"","sign":"","email":"","is_member":"","extra":"","create_time":"0001-01-01T00:00:00Z","update_time":"0001-01-01T00:00:00Z"}]
+ 
+I 2022/05/27 15:03:18 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:dubbo调用方法名称： changeUserMessage
+ 
+I 2022/05/27 15:03:18 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:方法参数:  [{"id":0,"userId":"328c5365-1174-47b8-85ed-c048110fa09811946","name":"","phone":"","password":"","trend1":"","trend2":"","trend3":"","is_prohibit":"","prohibit_reason":"","region_id":"","age":0,"sex":"0","icon":"","image":"","sign":"","email":"","is_member":"","extra":"","create_time":"0001-01-01T00:00:00Z","update_time":"0001-01-01T00:00:00Z"}]
+ 
+I 2022/05/27 15:03:18 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:更新数据条数小于1条!!!
+ 
+I 2022/05/27 15:03:18 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:封装结果: &{502 更新数据条数小于1 }
+ 
+I 2022/05/27 15:03:19 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:52709","remote.application":"public-consumer","traceId":"3499502db19ed3aa18c4a2eb552dc7c827fc56c","version":"0.0.0"},"Err":null,"Rest":{"code":502,"errMes":"更新数据条数小于1","data":""}}
+ 
+I 2022/05/27 15:03:19 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:更新数据条数小于1条!!!
+ 
+I 2022/05/27 15:03:19 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:封装结果: &{502 更新数据条数小于1 }
+ 
+I 2022/05/27 15:03:20 mylog.go:44: traceId:3499502db19ed3aa18c4a2eb552dc7c827fc56c message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:52709","remote.application":"public-consumer","traceId":"3499502db19ed3aa18c4a2eb552dc7c827fc56c","version":"0.0.0"},"Err":null,"Rest":{"code":502,"errMes":"更新数据条数小于1","data":""}}
  

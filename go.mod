@@ -4,6 +4,11 @@ go 1.17
 
 require (
 	dubbo.apache.org/dubbo-go/v3 v3.0.1
+	github.com/88250/gulu v1.2.0
+	github.com/apache/dubbo-go-hessian2 v1.11.0
+	github.com/garyburd/redigo v1.6.3
+	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/zouyx/agollo/v3 v3.4.5
 	gorm.io/driver/mysql v1.3.3
 	gorm.io/gen v0.3.4
 	gorm.io/gorm v1.23.4
@@ -11,7 +16,6 @@ require (
 
 require (
 	contrib.go.opencensus.io/exporter/prometheus v0.4.0 // indirect
-	github.com/88250/gulu v1.2.0 // indirect
 	github.com/RoaringBitmap/roaring v0.7.1 // indirect
 	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
 	github.com/Workiva/go-datastructures v1.0.52 // indirect
@@ -19,7 +23,6 @@ require (
 	github.com/alibaba/sentinel-golang v1.0.4 // indirect
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.18 // indirect
 	github.com/apache/dubbo-getty v1.4.7 // indirect
-	github.com/apache/dubbo-go-hessian2 v1.11.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bits-and-blooms/bitset v1.2.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
@@ -34,7 +37,6 @@ require (
 	github.com/dubbogo/triple v1.1.8 // indirect
 	github.com/emicklei/go-restful/v3 v3.7.3 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
-	github.com/garyburd/redigo v1.6.3 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-co-op/gocron v1.9.0 // indirect
 	github.com/go-errors/errors v1.0.1 // indirect
@@ -48,7 +50,6 @@ require (
 	github.com/go-resty/resty/v2 v2.7.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/mock v1.4.4 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -110,7 +111,6 @@ require (
 	github.com/uber/jaeger-client-go v2.29.1+incompatible // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/ugorji/go/codec v1.2.6 // indirect
-	github.com/zouyx/agollo/v3 v3.4.5 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.2 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.2 // indirect
 	go.etcd.io/etcd/client/v3 v3.5.2 // indirect

@@ -2,18 +2,22 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"funtour/database"
 	. "funtour/model"
 	"funtour/query"
 	"funtour/tool"
+	"github.com/garyburd/redigo/redis"
+	"github.com/zouyx/agollo/v3/component/log"
+	"strconv"
 )
 
 type UserService struct {
 }
 
 func (*UserService) Login(account string, password string) (*Result, error) {
-	tool.Info("请求参数:", account, password)
+	defer tool.CatchPanic()
 
 	u := query.Use(database.GetDb()).User
 	user, _ := u.WithContext(context.TODO()).
@@ -28,6 +32,8 @@ func (*UserService) Login(account string, password string) (*Result, error) {
 }
 
 func (*UserService) Register(user *User) (*Result, error) {
+	defer tool.CatchPanic()
+
 	if len(user.Password) == 0 || (len(user.Email) == 0 && len(user.Phone) == 0) {
 		return Error(202, "信息不完整"), nil
 	}
@@ -45,6 +51,8 @@ func (*UserService) Register(user *User) (*Result, error) {
 
 // 校验token有效期并刷新有效期
 func (*UserService) CheckToken(key string) (*Result, error) {
+	defer tool.CatchPanic()
+
 	redis := database.GetConnect()
 	reply, _ := redis.Do("get", key)
 	result := fmt.Sprintln(reply)
@@ -57,13 +65,30 @@ func (*UserService) CheckToken(key string) (*Result, error) {
 	}
 }
 
-//TODO 设置缓存
-func (*UserService) SetCache(key string, value string) (*Result, error) {
+// 设置缓存,存在则刷新时间，不存在则新建
+func (*UserService) SetCache(key string, value string, time string) (*Result, error) {
+	defer tool.CatchPanic()
+
+	key = tool.CACHE_USER_TOKEN + key
+	time_int, err := strconv.ParseInt(time, 10, 64)
+	if err != nil {
+		log.Error("字符串转int64出错", err)
+		return Error(206, "时间字段为只包含数字的字符串"), err
+	}
+
+	_, err = database.GetConnect().Do("setex", key, time_int, value)
+	if err != nil {
+		tool.Error("更新redis失败", err)
+		return Error(506, "操作redis失败"), err
+	}
+
 	return Ok(), nil
 }
 
 // 获取系统参数
 func (*UserService) GetSystemParams(key string) (*Result, error) {
+	defer tool.CatchPanic()
+
 	// 从缓存获取参数
 	cache, err := database.GetSystemCache(key)
 	if err != nil {
@@ -74,6 +99,8 @@ func (*UserService) GetSystemParams(key string) (*Result, error) {
 
 // 更改用户信息
 func (*UserService) ChangeUserMessage(user *User) (*Result, error) {
+	defer tool.CatchPanic()
+
 	if user.UserId == "" {
 		return Error(301, "用户id不正确"), nil
 	}
@@ -84,11 +111,24 @@ func (*UserService) ChangeUserMessage(user *User) (*Result, error) {
 		tool.Error("更新用户数据失败", err)
 		return Error(503, "更新用户数据报错"), err
 	}
-
 	if update.RowsAffected < 1 {
-		tool.Info("更新数据条数小于1条!!!")
-		return Error(502, "更新数据条数小于1"), err
+		tool.Info("没有数据被更新")
+		return Error(200, "无被更新的数据"), err
 	}
+
+	// 更新redis中的用户数据
+	userInfo, err := query.WithContext(context.TODO()).Where(query.UserID.Eq(user.UserId)).First()
+	key := tool.GetTokenCacheKey(user.UserId)
+	// 模糊查询key
+	keys, err := redis.Strings(database.GetConnect().Do("keys", key+"*"))
+	if err != nil {
+		log.Error("更新缓存的用户信息失败:", err)
+	}else if len(key) < 1 {
+		log.Info("无用户登录信息的缓存，可能是登陆超时或非法操作")
+	}
+	// 更新
+	value, _ := json.Marshal(userInfo)
+	database.GetConnect().Do("setex", keys[0], 60*30, string(value))
 
 	return Ok(), nil
 }
@@ -101,5 +141,7 @@ func (s *UserService) MethodMapper() map[string]string {
 		"CheckToken":        "checkToken",
 		"GetSystemParams":   "getSystemParams",
 		"ChangeUserMessage": "changeUserMessage",
+		"SetCache":          "setCache",
 	}
 }
+

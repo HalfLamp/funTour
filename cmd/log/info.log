@@ -1,6 +1,6 @@
-I 2022/05/27 15:10:32 mylog.go:44: traceId: message:Mysql数据库连接成功： czy:Mysql@826525@tcp(czytgc.com:3307)/amusingtourdb?charset=utf8&parseTime=True&loc=Local&timeout=10s
+I 2022/06/10 13:01:15 mylog.go:44: traceId: message:Mysql数据库连接成功： czy:Mysql@826525@tcp(czytgc.com:3307)/amusingtourdb?charset=utf8&parseTime=True&loc=Local&timeout=10s
  
-I 2022/05/27 15:10:32 mylog.go:44: traceId: message:初始化过滤器
+I 2022/06/10 13:01:15 mylog.go:44: traceId: message:初始化过滤器
  
 I 2022/05/27 15:11:01 mylog.go:44: traceId:3546113785dec44e20640c88a677615979a5929 message:dubbo调用方法名称： changeUserMessage
  

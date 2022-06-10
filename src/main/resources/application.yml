@@ -17,6 +17,18 @@ spring:
           uri: lb://public-consumer
           predicates:
             - Path=/public/**
+        - id: sight-consumer
+          uri: lb://sight-consumer
+          predicates:
+            - Path=/sight/**
+        - id: friend-consumer
+          uri: lb://friend-consumer
+          predicates:
+            - Path=/friend/**
+        - id: world-consumer
+          uri: lb://world-consumer
+          predicates:
+            - Path=/world/**
 logging:
   level:
     root: info

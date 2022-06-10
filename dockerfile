@@ -1,4 +1,4 @@
-FROM candengbanzhan/maven:1.2 AS build
+FROM candengbanzhan/maven:1.3 AS build
 COPY pom.xml /usr/src/app/pom.xml
 WORKDIR /usr/src/app
 #缓存依赖

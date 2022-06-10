@@ -15,6 +15,8 @@ env:
   HOSTPATH: /usr/local/springboot/vol/user/java/consumer/public
   IMAGEPATH: /app/images
   IMAGEHOSTPATH: /usr/local/springboot/vol/user/images
+  MAVENHOSTPATH: /usr/local/springboot/vol/user/java/repository
+  MAVENCONTAINERPATH: /root/.m2/repository
 
 jobs:
   build:
@@ -52,5 +54,5 @@ jobs:
           ssh root@czytgc.com "docker rm ${{ env.NAME }}"
           ssh root@czytgc.com "docker rmi ${{ env.IMAGE }}"
           ssh root@czytgc.com "docker pull ${{ env.IMAGE }}"
-          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:8080 --name ${{ env.NAME }} -v ${{env.HOSTPATH}}:${{env.CONTAINERPATH}} -v ${{env.IMAGEHOSTPATH}}:${{env.IMAGEPATH}} ${{ env.IMAGE }}"
+          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:8080 --name ${{ env.NAME }} -v ${{env.HOSTPATH}}:${{env.CONTAINERPATH}} -v ${{env.IMAGEHOSTPATH}}:${{env.IMAGEPATH}} -v ${{env.MAVENHOSTPATH}}:${{MAVENCONTAINERPATH}} ${{ env.IMAGE }}"
 

@@ -22,7 +22,7 @@ public interface SightService {
      * 根据条件获取景点详情
      * @return
      */
-    default Result getSightList(String userId, List types, List areas, Integer page, Integer size){
+    default Result getSightList(String userId, String keywords, List types, List areas, Integer page, Integer size){
         return Result.error(222, "系统无服务");
     }
 

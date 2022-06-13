@@ -19,7 +19,7 @@ public class ExceptionHandlerConfig {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result exceptionHandler(Exception exception){
-        log.error("请求发生错误,错误原因：{}\n错误信息: {}", exception.getCause(), exception.getMessage());
+        log.error("请求发生错误,错误原因：{}\n错误类型：{}；错误信息: {}", exception.getCause(), exception.getClass().getName(), exception.getMessage());
         Arrays.stream(exception.getStackTrace()).limit(5).forEach(item -> {
             log.error("错误调用栈： {}", item.getClassName() + ":" + item.getMethodName() + ":" + item.getLineNumber());
         });

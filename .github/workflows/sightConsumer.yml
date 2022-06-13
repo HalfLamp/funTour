@@ -52,5 +52,5 @@ jobs:
           ssh root@czytgc.com "docker rm ${{ env.NAME }}"
           ssh root@czytgc.com "docker rmi ${{ env.IMAGE }}"
           ssh root@czytgc.com "docker pull ${{ env.IMAGE }}"
-          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:8080 --name ${{ env.NAME }} -v ${{env.HOSTPATH}}:${{env.CONTAINERPATH}} -v ${{env.MAVENHOSTPATH}}:${{MAVENCONTAINERPATH}} ${{ env.IMAGE }}"
+          ssh root@czytgc.com "docker run -d -p ${{ env.PORT }}:8080 --name ${{ env.NAME }} -v ${{env.HOSTPATH}}:${{env.CONTAINERPATH}} -v ${{env.MAVENHOSTPATH}}:${{env.MAVENCONTAINERPATH}} ${{ env.IMAGE }}"
 

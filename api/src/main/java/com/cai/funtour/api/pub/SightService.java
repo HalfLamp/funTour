@@ -14,7 +14,7 @@ public interface SightService {
      * 根据用户喜好获取景点列表
      * @return
      */
-    default Result getSightListByUser(){
+    default Result getSightListByUser(String userId){
         return Result.error(222, "系统无服务");
     }
 

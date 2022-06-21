@@ -18,14 +18,16 @@
 package main
 
 import (
-	"dubbo.apache.org/dubbo-go/v3/config"
-	_ "dubbo.apache.org/dubbo-go/v3/imports"
 	"funtour/filters"
 	"funtour/service"
+
+	"dubbo.apache.org/dubbo-go/v3/config"
+	_ "dubbo.apache.org/dubbo-go/v3/imports"
 )
 
 func init() {
 	config.SetProviderService(&service.UserService{})
+	config.SetProviderService(&service.SightService{})
 }
 
 // export DUBBO_GO_CONFIG_PATH= PATH_TO_SAMPLES/helloworld/go-server/conf/dubbogo.yaml

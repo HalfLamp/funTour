@@ -14,6 +14,8 @@ func main() {
 	g.UseDB(db)
 	g.ApplyBasic(g.GenerateModelAs("sys_user", "User"))
 	g.ApplyBasic(g.GenerateModelAs("sys_params", "Param"))
+	g.ApplyBasic(g.GenerateModelAs("c_sight", "Sight"))
+	g.ApplyBasic(g.GenerateModelAs("c_label", "Label"))
 	g.Execute()
 
 	//tool.GetToken("")

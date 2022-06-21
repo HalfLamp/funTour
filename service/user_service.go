@@ -8,9 +8,10 @@ import (
 	. "funtour/model"
 	"funtour/query"
 	"funtour/tool"
+	"strconv"
+
 	"github.com/garyburd/redigo/redis"
 	"github.com/zouyx/agollo/v3/component/log"
-	"strconv"
 )
 
 type UserService struct {
@@ -37,8 +38,8 @@ func (*UserService) Register(user *User) (*Result, error) {
 	if len(user.Password) == 0 || (len(user.Email) == 0 && len(user.Phone) == 0) {
 		return Error(202, "信息不完整"), nil
 	}
-	userid := tool.GetUUID()
-	user.UserId = userid
+	UserID := tool.GetUUID()
+	user.UserID = UserID
 
 	u := query.Use(database.GetDb()).User
 	err := u.WithContext(context.TODO()).Select(u.ALL).Create(user)
@@ -85,12 +86,39 @@ func (*UserService) SetCache(key string, value string, time string) (*Result, er
 	return Ok(), nil
 }
 
+// 获取缓存中的用户信息
+func (*UserService) GetCacheByToken(key string) (*Result, error) {
+	defer tool.CatchPanic()
+	if key == "" {
+		return Error(202, "token不能为空"), nil
+	}
+	reply, err := redis.Strings(database.GetConnect().Do("keys", tool.CACHE_USER_TOKEN+"*"+key))
+	if err != nil {
+		tool.Error("获取key失败", err)
+		return Error(506, "操作redis失败"), err
+	}
+	if len(reply) < 1 {
+		return Error(403, "没有缓存"), nil
+	}
+
+	value, err := redis.String(database.GetConnect().Do("get", reply[0]))
+	if err != nil {
+		tool.Error("获取value失败", err)
+		return Error(506, "操作redis失败"), err
+	}
+	if value == "" {
+		return ToData(""), nil
+	} else {
+		return &Result{Code: 200, Data: value, ErrMes: ""}, nil
+	}
+}
+
 // 获取系统参数
 func (*UserService) GetSystemParams(key string) (*Result, error) {
 	defer tool.CatchPanic()
 
 	// 从缓存获取参数
-	cache, err := database.GetSystemCache(key)
+	cache, err := database.GetSystemCache(tool.CACHE_SYSTEM_PARAM + key)
 	if err != nil {
 		return Error(501, "获取参数出错"), err
 	}
@@ -101,12 +129,12 @@ func (*UserService) GetSystemParams(key string) (*Result, error) {
 func (*UserService) ChangeUserMessage(user *User) (*Result, error) {
 	defer tool.CatchPanic()
 
-	if user.UserId == "" {
+	if user.UserID == "" {
 		return Error(301, "用户id不正确"), nil
 	}
 
 	query := query.Use(database.GetDb()).User
-	update, err := query.WithContext(context.TODO()).Where(query.UserID.Eq(user.UserId)).Updates(user)
+	update, err := query.WithContext(context.TODO()).Where(query.UserID.Eq(user.UserID)).Updates(user)
 	if err != nil {
 		tool.Error("更新用户数据失败", err)
 		return Error(503, "更新用户数据报错"), err
@@ -117,13 +145,13 @@ func (*UserService) ChangeUserMessage(user *User) (*Result, error) {
 	}
 
 	// 更新redis中的用户数据
-	userInfo, err := query.WithContext(context.TODO()).Where(query.UserID.Eq(user.UserId)).First()
-	key := tool.GetTokenCacheKey(user.UserId)
+	userInfo, err := query.WithContext(context.TODO()).Where(query.UserID.Eq(user.UserID)).First()
+	key := tool.GetTokenCacheKey(user.UserID)
 	// 模糊查询key
 	keys, err := redis.Strings(database.GetConnect().Do("keys", key+"*"))
 	if err != nil {
 		log.Error("更新缓存的用户信息失败:", err)
-	}else if len(key) < 1 {
+	} else if len(key) < 1 {
 		log.Info("无用户登录信息的缓存，可能是登陆超时或非法操作")
 	}
 	// 更新
@@ -142,6 +170,6 @@ func (s *UserService) MethodMapper() map[string]string {
 		"GetSystemParams":   "getSystemParams",
 		"ChangeUserMessage": "changeUserMessage",
 		"SetCache":          "setCache",
+		"GetCacheByToken":   "getCacheByToken",
 	}
 }
-

@@ -30,9 +30,7 @@ func newUser(db *gorm.DB) user {
 	_user.Name = field.NewString(tableName, "name")
 	_user.Phone = field.NewString(tableName, "phone")
 	_user.Password = field.NewString(tableName, "password")
-	_user.Trend1 = field.NewString(tableName, "trend1")
-	_user.Trend2 = field.NewString(tableName, "trend2")
-	_user.Trend3 = field.NewString(tableName, "trend3")
+	_user.Trends = field.NewString(tableName, "trends")
 	_user.IsProhibit = field.NewString(tableName, "is_prohibit")
 	_user.ProhibitReason = field.NewString(tableName, "prohibit_reason")
 	_user.RegionID = field.NewString(tableName, "region_id")
@@ -61,9 +59,7 @@ type user struct {
 	Name           field.String
 	Phone          field.String
 	Password       field.String
-	Trend1         field.String
-	Trend2         field.String
-	Trend3         field.String
+	Trends         field.String
 	IsProhibit     field.String
 	ProhibitReason field.String
 	RegionID       field.String
@@ -98,9 +94,7 @@ func (u *user) updateTableName(table string) *user {
 	u.Name = field.NewString(table, "name")
 	u.Phone = field.NewString(table, "phone")
 	u.Password = field.NewString(table, "password")
-	u.Trend1 = field.NewString(table, "trend1")
-	u.Trend2 = field.NewString(table, "trend2")
-	u.Trend3 = field.NewString(table, "trend3")
+	u.Trends = field.NewString(table, "trends")
 	u.IsProhibit = field.NewString(table, "is_prohibit")
 	u.ProhibitReason = field.NewString(table, "prohibit_reason")
 	u.RegionID = field.NewString(table, "region_id")
@@ -136,15 +130,13 @@ func (u *user) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (u *user) fillFieldMap() {
-	u.fieldMap = make(map[string]field.Expr, 21)
+	u.fieldMap = make(map[string]field.Expr, 19)
 	u.fieldMap["id"] = u.ID
 	u.fieldMap["user_id"] = u.UserID
 	u.fieldMap["name"] = u.Name
 	u.fieldMap["phone"] = u.Phone
 	u.fieldMap["password"] = u.Password
-	u.fieldMap["trend1"] = u.Trend1
-	u.fieldMap["trend2"] = u.Trend2
-	u.fieldMap["trend3"] = u.Trend3
+	u.fieldMap["trends"] = u.Trends
 	u.fieldMap["is_prohibit"] = u.IsProhibit
 	u.fieldMap["prohibit_reason"] = u.ProhibitReason
 	u.fieldMap["region_id"] = u.RegionID

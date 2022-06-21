@@ -14,7 +14,9 @@ import (
 func Use(db *gorm.DB) *Query {
 	return &Query{
 		db:    db,
+		Label: newLabel(db),
 		Param: newParam(db),
+		Sight: newSight(db),
 		User:  newUser(db),
 	}
 }
@@ -22,7 +24,9 @@ func Use(db *gorm.DB) *Query {
 type Query struct {
 	db *gorm.DB
 
+	Label label
 	Param param
+	Sight sight
 	User  user
 }
 
@@ -31,19 +35,25 @@ func (q *Query) Available() bool { return q.db != nil }
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
 		db:    db,
+		Label: q.Label.clone(db),
 		Param: q.Param.clone(db),
+		Sight: q.Sight.clone(db),
 		User:  q.User.clone(db),
 	}
 }
 
 type queryCtx struct {
+	Label labelDo
 	Param paramDo
+	Sight sightDo
 	User  userDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
+		Label: *q.Label.WithContext(ctx),
 		Param: *q.Param.WithContext(ctx),
+		Sight: *q.Sight.WithContext(ctx),
 		User:  *q.User.WithContext(ctx),
 	}
 }

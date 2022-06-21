@@ -5,7 +5,6 @@
 package model
 
 import (
-	hessian "github.com/apache/dubbo-go-hessian2"
 	"time"
 )
 
@@ -14,13 +13,11 @@ const TableNameUser = "sys_user"
 // User mapped from table <sys_user>
 type User struct {
 	ID             int64     `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`                        // 主键
-	UserId         string    `gorm:"column:user_id" json:"userId"`                                             // 用户id
+	UserID         string    `gorm:"column:user_id" json:"user_id"`                                            // 用户id
 	Name           string    `gorm:"column:name" json:"name"`                                                  // 用户名
 	Phone          string    `gorm:"column:phone" json:"phone"`                                                // 手机号
 	Password       string    `gorm:"column:password" json:"password"`                                          // 密码
-	Trend1         string    `gorm:"column:trend1" json:"trend1"`                                              // 用户趋向的景点类型
-	Trend2         string    `gorm:"column:trend2" json:"trend2"`                                              // 用户趋向的景点类型
-	Trend3         string    `gorm:"column:trend3" json:"trend3"`                                              // 用户趋向的景点类型
+	Trends         string    `gorm:"column:trends" json:"trends"`                                              // 用户趋向的景点类型
 	IsProhibit     string    `gorm:"column:is_prohibit;not null" json:"is_prohibit"`                           // 账号是否封禁（0正常1封禁）
 	ProhibitReason string    `gorm:"column:prohibit_reason" json:"prohibit_reason"`                            // 封禁理由
 	RegionID       string    `gorm:"column:region_id" json:"region_id"`                                        // 用户所在省市
@@ -39,12 +36,4 @@ type User struct {
 // TableName User's table name
 func (*User) TableName() string {
 	return TableNameUser
-}
-
-func (u *User) JavaClassName() string {
-	return "com.cai.funtour.po.User"
-}
-
-func init() {
-	hessian.RegisterPOJO(&User{})
 }

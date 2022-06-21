@@ -35,19 +35,17 @@ public class SightController {
     @ApiOperation("景点查询接口")
     @GetMapping("search")
     public Result search(@ApiParam("关键词") @RequestParam(value = "key", required = false) String key,
-                         @ApiParam("类型列表") @RequestParam(value = "type", required = false) List<String> type,
-                         @ApiParam("地区列表") @RequestParam(value = "regionCode", required = false) List<String> regionCode,
+                         @ApiParam("类型列表") @RequestParam(value = "type", required = false) String[] type,
+                         @ApiParam("地区列表") @RequestParam(value = "regionCode", required = false) String[] regionCode,
                          @ApiParam("页码") @RequestParam(value = "page") Integer page,
-                         @ApiParam("每页数量") @RequestParam(value = "size") Integer size) {
-        // TODO 根据token从缓存获取userid，通过userId获取相关用户的景点列表
+                         @ApiParam("每页数量") @RequestParam(value = "size") Integer size,
+                         @RequestHeader(value = "token", required = false) String headerToken) {
         String userId = "";
-        Result token = userService.getCacheByToken("token");
+        Result token = userService.getCacheByToken(headerToken == null ? "" : headerToken);
         String data = token.getCode() == 200 ? token.getData().toString() : null;
         if (data != null) {
             Map userInfo = JSONObject.parseObject(data, Map.class);
             userId = userInfo.get("userId").toString();
-        }else {
-            return Result.error(token.getCode(), "token失效");
         }
         // 没有添加限制条件
         if (key == null && type == null && regionCode == null) {
@@ -55,7 +53,21 @@ public class SightController {
             return sightService.getSightListByUser(userId,page,size);
         } else {
             // 根据条件查询景点列表
+            if (key == null) {
+                key = "";
+            }
+            if (type == null) {
+                type = new String[]{};
+            }
+            if (regionCode == null) {
+                regionCode = new String[]{};
+            }
             return sightService.getSightList(userId,key,type,regionCode,page,size);
         }
+    }
+
+    @GetMapping("getSightById/{sightId}")
+    public Result getSightInfo(@ApiParam("景点id") @PathVariable("sightId") String sightId) {
+        return sightService.getSightInfo(sightId);
     }
 }

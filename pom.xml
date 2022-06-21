@@ -26,6 +26,12 @@
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>[6.1.7, 6.999]</version>
+        </dependency>
     </dependencies>
 
     <build>

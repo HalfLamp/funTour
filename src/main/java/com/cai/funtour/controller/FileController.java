@@ -62,6 +62,27 @@ public class FileController {
         Result result = Result.toData("images", urls);
         result.setErrMes(errorMes);
         return result;
+    }
 
+    @ApiOperation("图片上传")
+    @PostMapping("/images/v2")
+    public Result uploadImagesV2(@ApiParam("图片数组") MultipartFile images) throws IOException {
+        List<String> urls = new ArrayList<>();
+        String errorMes = "";
+        InputStream inputStream = images.getInputStream();
+        String type = FileTypeUtil.getType(inputStream);
+        String[] split = imageTypes.split(",");
+        // 判断文件类型是否支持
+        if (Arrays.asList(imageTypes.split(",")).contains(type)) {
+            String fileName = TraceId.getTraceId() + "." + type;
+            File file = new File(path, fileName);
+            images.transferTo(file);
+            urls.add(URL_PRE + fileName);
+        } else {
+            errorMes = "有图片未上传，有不支持的类型";
+        }
+        Result result = Result.toData("images", urls);
+        result.setErrMes(errorMes);
+        return result;
     }
 }

@@ -67,7 +67,7 @@ public class UserPublicController extends BaseController {
         return Result.toData(map);
     }
 
-    @ApiOperation("登录接口")
+    @ApiOperation("注册接口")
     @PostMapping("/register")
     public Result register(@ApiParam("email/phone；password必填") @RequestBody User params) {
 

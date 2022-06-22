@@ -4,6 +4,7 @@ import (
 	"context"
 	"funtour/query"
 	"funtour/tool"
+
 	"github.com/garyburd/redigo/redis"
 )
 
@@ -33,7 +34,7 @@ func GetConnect() redis.Conn {
 func GetSystemCache(key string) (string, error) {
 	conn := GetConnect()
 
-	data, err := conn.Do("get", key)
+	data, err := conn.Do("get", tool.CACHE_SYSTEM_PARAM+key)
 	if err != nil {
 		tool.Error("获取缓存出错", err)
 		return "", err
@@ -61,7 +62,7 @@ func GetSystemCache(key string) (string, error) {
 		return "", err
 	}
 	// 设置缓存
-	conn.Do("setex", key, 43200, result.Value)
-	reply, _ = redis.String(conn.Do("get", key))
+	conn.Do("setex", tool.CACHE_SYSTEM_PARAM+key, 43200, result.Value)
+	reply, _ = redis.String(conn.Do("get", tool.CACHE_SYSTEM_PARAM+key))
 	return reply, nil
 }

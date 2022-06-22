@@ -2,14 +2,15 @@ package filters
 
 import (
 	"context"
-	"dubbo.apache.org/dubbo-go/v3/common/constant"
-	"dubbo.apache.org/dubbo-go/v3/common/extension"
-	"dubbo.apache.org/dubbo-go/v3/filter"
-	"dubbo.apache.org/dubbo-go/v3/protocol"
 	"encoding/json"
 	"fmt"
 	"funtour/model"
 	"funtour/tool"
+
+	"dubbo.apache.org/dubbo-go/v3/common/constant"
+	"dubbo.apache.org/dubbo-go/v3/common/extension"
+	"dubbo.apache.org/dubbo-go/v3/filter"
+	"dubbo.apache.org/dubbo-go/v3/protocol"
 )
 
 func init() {
@@ -35,7 +36,7 @@ func (f *MyFilter) Invoke(ctx context.Context, invoker protocol.Invoker, invocat
 
 func (f *MyFilter) OnResponse(ctx context.Context, result protocol.Result, invoker protocol.Invoker, protocol protocol.Invocation) protocol.Result {
 	if result.Result() == nil {
-		result.SetResult(model.Error(500, "未知错误"))
+		result.SetResult(model.Error(500, "服务提供者异常：未知错误"))
 	}
 	res, _ := json.Marshal(result)
 	tool.Info("响应结果：", string(res))

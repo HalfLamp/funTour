@@ -118,7 +118,7 @@ func (*UserService) GetSystemParams(key string) (*Result, error) {
 	defer tool.CatchPanic()
 
 	// 从缓存获取参数
-	cache, err := database.GetSystemCache(tool.CACHE_SYSTEM_PARAM + key)
+	cache, err := database.GetSystemCache(key)
 	if err != nil {
 		return Error(501, "获取参数出错"), err
 	}

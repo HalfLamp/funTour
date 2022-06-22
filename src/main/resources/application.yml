@@ -6,3 +6,8 @@ upload:
   path: /app/images/
 #  path: S:\project\back\work\images\
   types: jpg,jpeg,png,gif
+qiniuyun:
+  access-key: P5SNQ1CeVmcRlVjwDPSzTvWPvuCQa27e-I0qxxqB
+  secret-key: _ZTOnaPPh1lUTqgfJXP54sX25R60xQ55Bsr8m_Gj
+  bucket: caizhiyuan
+  domain: http://file.czytgc.com/

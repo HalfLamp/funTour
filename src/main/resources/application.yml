@@ -7,6 +7,7 @@ spring:
     nacos:
       discovery:
         group: FUNTOUR_DEV
+        namespace: 73545db9-50de-4b82-a402-431797133453
       server-addr: czytgc.com:8848
     gateway:
       discovery:

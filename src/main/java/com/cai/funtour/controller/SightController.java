@@ -4,16 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.cai.funtour.api.pub.SightService;
 import com.cai.funtour.api.pub.UserService;
 import com.cai.funtour.pojo.Result;
-import com.cai.funtour.tools.Tools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,8 +63,15 @@ public class SightController {
         }
     }
 
+    @ApiOperation("景点详细信息")
     @GetMapping("getSightById/{sightId}")
     public Result getSightInfo(@ApiParam("景点id") @PathVariable("sightId") String sightId) {
         return sightService.getSightInfo(sightId);
+    }
+
+    @ApiOperation(value = "获取相似景点", notes = "根据景点ID查询其他类似的景点")
+    @GetMapping("getSimilarSights/{sightId}")
+    public Result getSimilarSightsById(@ApiParam("景点id") @PathVariable("sightId") String sightId){
+        return sightService.similarSights(sightId);
     }
 }

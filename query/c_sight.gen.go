@@ -39,15 +39,10 @@ func newSight(db *gorm.DB) sight {
 	_sight.ExtraImages = field.NewString(tableName, "extra_images")
 	_sight.Extra = field.NewString(tableName, "extra")
 	_sight.Type = field.NewString(tableName, "type")
-	_sight.Label1 = field.NewString(tableName, "label1")
-	_sight.Label2 = field.NewString(tableName, "label2")
-	_sight.Label5 = field.NewString(tableName, "label5")
-	_sight.Label3 = field.NewString(tableName, "label3")
-	_sight.Label4 = field.NewString(tableName, "label4")
 	_sight.Address = field.NewString(tableName, "address")
 	_sight.CreateTime = field.NewTime(tableName, "create_time")
 	_sight.UpdateTime = field.NewTime(tableName, "update_time")
-	_sight.IsUser = field.NewString(tableName, "is_user")
+	_sight.IsUse = field.NewString(tableName, "is_use")
 
 	_sight.fillFieldMap()
 
@@ -72,15 +67,10 @@ type sight struct {
 	ExtraImages field.String
 	Extra       field.String
 	Type        field.String
-	Label1      field.String
-	Label2      field.String
-	Label5      field.String
-	Label3      field.String
-	Label4      field.String
 	Address     field.String
 	CreateTime  field.Time
 	UpdateTime  field.Time
-	IsUser      field.String
+	IsUse       field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -111,15 +101,10 @@ func (s *sight) updateTableName(table string) *sight {
 	s.ExtraImages = field.NewString(table, "extra_images")
 	s.Extra = field.NewString(table, "extra")
 	s.Type = field.NewString(table, "type")
-	s.Label1 = field.NewString(table, "label1")
-	s.Label2 = field.NewString(table, "label2")
-	s.Label5 = field.NewString(table, "label5")
-	s.Label3 = field.NewString(table, "label3")
-	s.Label4 = field.NewString(table, "label4")
 	s.Address = field.NewString(table, "address")
 	s.CreateTime = field.NewTime(table, "create_time")
 	s.UpdateTime = field.NewTime(table, "update_time")
-	s.IsUser = field.NewString(table, "is_user")
+	s.IsUse = field.NewString(table, "is_use")
 
 	s.fillFieldMap()
 
@@ -142,7 +127,7 @@ func (s *sight) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (s *sight) fillFieldMap() {
-	s.fieldMap = make(map[string]field.Expr, 23)
+	s.fieldMap = make(map[string]field.Expr, 18)
 	s.fieldMap["id"] = s.ID
 	s.fieldMap["sight_id"] = s.SightID
 	s.fieldMap["name"] = s.Name
@@ -157,15 +142,10 @@ func (s *sight) fillFieldMap() {
 	s.fieldMap["extra_images"] = s.ExtraImages
 	s.fieldMap["extra"] = s.Extra
 	s.fieldMap["type"] = s.Type
-	s.fieldMap["label1"] = s.Label1
-	s.fieldMap["label2"] = s.Label2
-	s.fieldMap["label5"] = s.Label5
-	s.fieldMap["label3"] = s.Label3
-	s.fieldMap["label4"] = s.Label4
 	s.fieldMap["address"] = s.Address
 	s.fieldMap["create_time"] = s.CreateTime
 	s.fieldMap["update_time"] = s.UpdateTime
-	s.fieldMap["is_user"] = s.IsUser
+	s.fieldMap["is_use"] = s.IsUse
 }
 
 func (s sight) clone(db *gorm.DB) sight {

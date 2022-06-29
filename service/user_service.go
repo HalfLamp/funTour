@@ -11,7 +11,6 @@ import (
 	"strconv"
 
 	"github.com/garyburd/redigo/redis"
-	"github.com/zouyx/agollo/v3/component/log"
 )
 
 type UserService struct {
@@ -73,7 +72,7 @@ func (*UserService) SetCache(key string, value string, time string) (*Result, er
 	key = tool.CACHE_USER_TOKEN + key
 	time_int, err := strconv.ParseInt(time, 10, 64)
 	if err != nil {
-		log.Error("字符串转int64出错", err)
+		tool.Error("字符串转int64出错", err)
 		return Error(206, "时间字段为只包含数字的字符串"), err
 	}
 
@@ -150,9 +149,9 @@ func (*UserService) ChangeUserMessage(user *User) (*Result, error) {
 	// 模糊查询key
 	keys, err := redis.Strings(database.GetConnect().Do("keys", key+"*"))
 	if err != nil {
-		log.Error("更新缓存的用户信息失败:", err)
+		tool.Error("更新缓存的用户信息失败:", err)
 	} else if len(key) < 1 {
-		log.Info("无用户登录信息的缓存，可能是登陆超时或非法操作")
+		tool.Info("无用户登录信息的缓存，可能是登陆超时或非法操作")
 	}
 	// 更新
 	value, _ := json.Marshal(userInfo)

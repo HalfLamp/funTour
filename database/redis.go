@@ -2,6 +2,8 @@ package database
 
 import (
 	"context"
+	"encoding/json"
+	"funtour/model"
 	"funtour/query"
 	"funtour/tool"
 
@@ -65,4 +67,24 @@ func GetSystemCache(key string) (string, error) {
 	conn.Do("setex", tool.CACHE_SYSTEM_PARAM+key, 43200, result.Value)
 	reply, _ = redis.String(conn.Do("get", tool.CACHE_SYSTEM_PARAM+key))
 	return reply, nil
+}
+
+// 热点景点数据，初始容量50
+var hotSight = NewLRU(50)
+
+// 获取缓存中的景点信息
+func GetSightInfoCache(key string) (*model.Sight, error) {
+	conn := GetConnect()
+	sightInfo, _ := redis.String(conn.Do("get", tool.CACHE_SIGHT+key))
+	// 若缓存中有数据
+	if sightInfo != "" {
+		sight := &model.Sight{}
+		json.Unmarshal([]byte(sightInfo), sight)
+		return sight, nil
+	}
+
+	// 若没有缓存，则进入LRU算法
+	go hotSight.Get(key)
+
+	return nil, nil
 }

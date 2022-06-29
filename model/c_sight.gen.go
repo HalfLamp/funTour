@@ -26,15 +26,10 @@ type Sight struct {
 	ExtraImages string    `gorm:"column:extra_images" json:"extra_images"`                                  // 其他图片
 	Extra       string    `gorm:"column:extra" json:"extra"`                                                // 其他
 	Type        string    `gorm:"column:type" json:"type"`                                                  // 类型
-	Label1      string    `gorm:"column:label1" json:"label1"`                                              // 标签1
-	Label2      string    `gorm:"column:label2" json:"label2"`                                              // 标签2
-	Label5      string    `gorm:"column:label5" json:"label5"`                                              // 标签5
-	Label3      string    `gorm:"column:label3" json:"label3"`                                              // 标签3
-	Label4      string    `gorm:"column:label4" json:"label4"`                                              // 标签4
 	Address     string    `gorm:"column:address" json:"address"`                                            // 详细地址
 	CreateTime  time.Time `gorm:"column:create_time;not null;default:CURRENT_TIMESTAMP" json:"create_time"` // 创建时间
 	UpdateTime  time.Time `gorm:"column:update_time;not null;default:CURRENT_TIMESTAMP" json:"update_time"` // 更新时间
-	IsUser      string    `gorm:"column:is_user" json:"is_user"`                                            // 是否可用
+	IsUse       string    `gorm:"column:is_use" json:"is_use"`                                              // 是否可用
 }
 
 // TableName Sight's table name

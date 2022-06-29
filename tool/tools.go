@@ -9,6 +9,7 @@ import (
 const (
 	CACHE_USER_TOKEN   = "FUNTOUR:USER:TOKEN_"
 	CACHE_SYSTEM_PARAM = "FUNTOUR:SYSTEM:PARAM_"
+	CACHE_SIGHT        = "FUNTOUR:SIGHT:"
 )
 
 func GetUUID() string {

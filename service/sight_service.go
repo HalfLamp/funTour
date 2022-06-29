@@ -1,9 +1,11 @@
 package service
 
 import (
+	"context"
 	"fmt"
 	"funtour/database"
 	. "funtour/model"
+	"funtour/query"
 	"funtour/tool"
 )
 
@@ -89,9 +91,33 @@ func (*SightService) GetSightList(userId, key string, types, regionCode []string
 	}
 }
 
+// 获取景点详细信息
+func (*SightService) GetSightInfo(sightId string) (*Result, error) {
+	defer tool.CatchPanic()
+
+	sightInfo, err := database.GetSightInfoCache(sightId)
+	if err != nil {
+		tool.Error("查询景点信息出错", err)
+		return Error(206, "查询景点信息出错"), err
+	}
+
+	if sightInfo == nil {
+		sight := query.Use(database.GetDb()).Sight
+		db := sight.WithContext(context.TODO())
+		sightInfo, err = db.Where(sight.SightID.Eq(sightId)).Where(sight.IsUse.Eq("1")).First()
+		if err != nil {
+			tool.Error("查询景点信息出错", err)
+			return Error(206, "查询景点信息出错"), err
+		}
+	}
+
+	return ToData(sightInfo), nil
+}
+
 func (*SightService) MethodMapper() map[string]string {
 	return map[string]string{
 		"GetSightListByUser": "getSightListByUser",
 		"GetSightList":       "getSightList",
+		"GetSightInfo":       "getSightInfo",
 	}
 }

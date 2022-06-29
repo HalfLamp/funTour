@@ -75,7 +75,7 @@ public interface SightService {
      * @param sightId
      * @return
      */
-    default Result similarSights(String sightId){
+    default Result similarSights(String sightId, int typeSize, int regionSize){
         return Result.error(222, "系统无服务");
     }
 

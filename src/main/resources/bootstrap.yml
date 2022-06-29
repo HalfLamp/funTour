@@ -24,9 +24,15 @@ dubbo:
   registry:
     # zookeeper;redis;nacos;Eureka
     address: nacos://czytgc.com:8848
+    parameters:
+      namespace: 73545db9-50de-4b82-a402-431797133453
   cloud:
     # 订阅的服务，'*'表示所有，有多个用','分割
     subscribed-services: "*"
   consumer:
     check: false
     filter: traceId
+logging:
+  level:
+    root: info
+  config: classpath:log4j2.xml

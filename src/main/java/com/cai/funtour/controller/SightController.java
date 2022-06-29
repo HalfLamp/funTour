@@ -26,9 +26,9 @@ import java.util.Map;
 @RestController
 @RequestMapping
 public class SightController {
-    @Reference
+    @Reference(group = "funtour_dev")
     SightService sightService;
-    @Reference
+    @Reference(group = "funtour_dev")
     UserService userService;
 
 

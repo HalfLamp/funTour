@@ -8,6 +8,7 @@ spring:
       discovery:
         namespace: 73545db9-50de-4b82-a402-431797133453
 #        namespace: 9d41cfe3-93be-48f4-8ed0-cc6a37e4bffa
+        group: FUNTOUR
       server-addr: czytgc.com:8848
     gateway:
       discovery:

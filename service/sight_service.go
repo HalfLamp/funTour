@@ -85,7 +85,7 @@ func (*SightService) GetSightList(userId, key string, types, regionCode []string
 	database.GetDb().Raw(findSightList, params...).Scan(&sightList)
 
 	if len(sightList) > 0 {
-		return ToDataWithName("sightList", sightList), nil
+		return ToData(sightList), nil
 	} else {
 		return Error(205, "没有景点"), nil
 	}
@@ -94,13 +94,13 @@ func (*SightService) GetSightList(userId, key string, types, regionCode []string
 // 获取景点详细信息
 func (*SightService) GetSightInfo(sightId string) (*Result, error) {
 	defer tool.CatchPanic()
-
+	// 从缓存获取景点信息
 	sightInfo, err := database.GetSightInfoCache(sightId)
 	if err != nil {
 		tool.Error("查询景点信息出错", err)
 		return Error(206, "查询景点信息出错"), err
 	}
-
+	// 从数据库获取景点信息
 	if sightInfo == nil {
 		sight := query.Use(database.GetDb()).Sight
 		db := sight.WithContext(context.TODO())
@@ -110,8 +110,31 @@ func (*SightService) GetSightInfo(sightId string) (*Result, error) {
 			return Error(206, "查询景点信息出错"), err
 		}
 	}
-
 	return ToData(sightInfo), nil
+}
+
+func (*SightService) SimilarSights(sightId string, typeSize, regionSize int32) (*Result, error) {
+	defer tool.CatchPanic()
+
+	db := database.GetDb()
+	sql := "select sight_id,`name`,`describe`,region_id,best_time,star_level,hot_level,cover_images,address " +
+		" from c_sight " +
+		" where sight_id in (select DISTINCT uniqueId from c_label where type = '景点' and label in ( " +
+		" 	select label from c_label l where l.uniqueId = ? and l.type = '景点' " +
+		" )) and sight_id != ? limit ?"
+
+	sightList := make([]Sight, 0)
+	result := make(map[string][]Sight)
+	db.Raw(sql, sightId, sightId, typeSize).Scan(&sightList)
+	result["typeList"] = sightList
+
+	sql = " select sight_id,`name`,`describe`,region_id,best_time,star_level,hot_level,cover_images,address  " +
+		" from c_sight " +
+		" where region_id = (select region_id from c_sight where sight_id = ?) and region_id != '' and sight_id != ? limit ?"
+	db.Raw(sql, sightId, sightId, regionSize).Scan(&sightList)
+	result["regionList"] = sightList
+
+	return ToData(result), nil
 }
 
 func (*SightService) MethodMapper() map[string]string {
@@ -119,5 +142,6 @@ func (*SightService) MethodMapper() map[string]string {
 		"GetSightListByUser": "getSightListByUser",
 		"GetSightList":       "getSightList",
 		"GetSightInfo":       "getSightInfo",
+		"SimilarSights":      "similarSights",
 	}
 }

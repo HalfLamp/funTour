@@ -40,6 +40,7 @@ import java.util.Date;
 @Slf4j
 public class AccessFilter implements GlobalFilter, Ordered {
     private final String PUBLIC_URL = "/public";
+    private final String ALLOW_URL = "/pub";
     private final String SWAGGER_URL = "/swagger-ui.html";
 
     @Override
@@ -49,7 +50,7 @@ public class AccessFilter implements GlobalFilter, Ordered {
         log.info("请求路径：{}；请求token：{}", path, token);
 
         // 公共请求，不检查token
-        if (path.contains(PUBLIC_URL) || path.contains(SWAGGER_URL)) {
+        if (path.contains(PUBLIC_URL) || path.contains(SWAGGER_URL) || path.contains(ALLOW_URL)) {
             return chain.filter(exchange);
         }
         // 不含token
@@ -58,13 +59,17 @@ public class AccessFilter implements GlobalFilter, Ordered {
         }
 
         // 从redis验证并刷新token有效期
-        String key = "funTour:token:" + token;
-        String url = "czytgc.com:8772/public/user/cache/" + key;
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Result> response = restTemplate.exchange(url, HttpMethod.GET, null, Result.class);
-        Result cache = response.getBody();
-        if (cache == null){
-            return responseError(exchange, 401, "token过期");
+        try {
+            String key = "funTour:token:" + token;
+            String url = "http://czytgc.com:8771/public/user/cache/" + key;
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<Result> response = restTemplate.exchange(url, HttpMethod.GET, null, Result.class);
+            Result cache = response.getBody();
+            if (cache == null) {
+                return responseError(exchange, 401, "token过期");
+            }
+        }catch (Exception e){
+            return responseError(exchange, 503, "验证token出错");
         }
 
         // token校验

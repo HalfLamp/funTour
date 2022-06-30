@@ -23,9 +23,9 @@ import java.util.Map;
 @RestController
 @RequestMapping
 public class SightController {
-    @Reference(group = "funtour_dev")
+    @Reference
     SightService sightService;
-    @Reference(group = "funtour_dev")
+    @Reference
     UserService userService;
 
 
@@ -71,7 +71,9 @@ public class SightController {
 
     @ApiOperation(value = "获取相似景点", notes = "根据景点ID查询其他类似的景点")
     @GetMapping("getSimilarSights/{sightId}")
-    public Result getSimilarSightsById(@ApiParam("景点id") @PathVariable("sightId") String sightId){
-        return sightService.similarSights(sightId);
+    public Result getSimilarSightsById(@ApiParam("景点id") @PathVariable("sightId") String sightId,
+                                       @ApiParam("期望的相似类型的数量") @RequestParam("typeSize") int typeSize,
+                                       @ApiParam("期望的相似地点的数量") @RequestParam("regionSize") int regionSize){
+        return sightService.similarSights(sightId, typeSize, regionSize);
     }
 }

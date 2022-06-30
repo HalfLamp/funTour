@@ -15,6 +15,7 @@ public class ErrorResponse {
     private static Map<String, Result> errMap;
 
     static {
+        errMap = new HashMap();
         errMap.put("org.apache.dubbo.rpc.RpcException", Result.error(502, "无服务提供者"));
         errMap.put("org.springframework.web.HttpRequestMethodNotSupportedException", Result.error(HttpURLConnection.HTTP_BAD_METHOD, "请求方式错误"));
     }

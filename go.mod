@@ -8,7 +8,6 @@ require (
 	github.com/apache/dubbo-go-hessian2 v1.11.0
 	github.com/garyburd/redigo v1.6.3
 	github.com/golang-jwt/jwt v3.2.2+incompatible
-	github.com/zouyx/agollo/v3 v3.4.5
 	gorm.io/driver/mysql v1.3.3
 	gorm.io/gen v0.3.4
 	gorm.io/gorm v1.23.4
@@ -111,6 +110,7 @@ require (
 	github.com/uber/jaeger-client-go v2.29.1+incompatible // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/ugorji/go/codec v1.2.6 // indirect
+	github.com/zouyx/agollo/v3 v3.4.5 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.2 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.2 // indirect
 	go.etcd.io/etcd/client/v3 v3.5.2 // indirect

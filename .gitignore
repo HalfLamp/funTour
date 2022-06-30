@@ -3,5 +3,3 @@
 .idea/modules.xml
 .idea/vcs.xml
 .vscode/launch.json
-cmd/log/info.log
-cmd/log/nacos-sdk.log

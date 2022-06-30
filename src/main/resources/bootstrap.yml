@@ -12,7 +12,8 @@ spring:
     nacos:
       discovery:
         server-addr: czytgc.com:8848
-        group: FUNTOUR_DEV
+        group: FUNTOUR
+        namespace: 73545db9-50de-4b82-a402-431797133453
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

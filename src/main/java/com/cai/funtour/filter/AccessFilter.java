@@ -40,6 +40,7 @@ import java.util.Date;
 @Slf4j
 public class AccessFilter implements GlobalFilter, Ordered {
     private final String PUBLIC_URL = "/public";
+    private final String SWAGGER_URL = "/swagger-ui.html";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -48,7 +49,7 @@ public class AccessFilter implements GlobalFilter, Ordered {
         log.info("请求路径：{}；请求token：{}", path, token);
 
         // 公共请求，不检查token
-        if (path.contains(PUBLIC_URL)) {
+        if (path.contains(PUBLIC_URL) || path.contains(SWAGGER_URL)) {
             return chain.filter(exchange);
         }
         // 不含token

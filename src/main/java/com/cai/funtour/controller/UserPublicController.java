@@ -109,8 +109,15 @@ public class UserPublicController extends BaseController {
 
     @ApiOperation("通过token获取用户信息")
     @GetMapping("/cache/{token}")
-    public Result getCacheByToken(@ApiParam("token") @PathVariable String token) {
-        return user.getCacheByToken(token);
+    public Result getCacheByToken(@ApiParam("token") @PathVariable(required = false) String token,
+                                  @ApiParam("token") @RequestHeader(required = false) String tokenHeader) {
+        if (StringUtils.isNotBlank(token)){
+            return user.getCacheByToken(token);
+        }else if(StringUtils.isNotBlank(tokenHeader)){
+            return user.getCacheByToken(tokenHeader);
+        }else {
+            return Result.error(407, "没有token");
+        }
     }
 
 }

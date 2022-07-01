@@ -107,4 +107,10 @@ public class UserPublicController extends BaseController {
         }
     }
 
+    @ApiOperation("通过token获取用户信息")
+    @GetMapping("/cache/{token}")
+    public Result getCacheByToken(@ApiParam("token") @PathVariable String token) {
+        return user.getCacheByToken(token);
+    }
+
 }

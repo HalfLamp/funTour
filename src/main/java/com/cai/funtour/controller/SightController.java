@@ -30,7 +30,7 @@ public class SightController {
 
 
     @ApiOperation("景点查询接口")
-    @GetMapping("search")
+    @GetMapping("pub/search")
     public Result search(@ApiParam("关键词") @RequestParam(value = "key", required = false) String key,
                          @ApiParam("类型列表") @RequestParam(value = "type", required = false) String[] type,
                          @ApiParam("地区列表") @RequestParam(value = "regionCode", required = false) String[] regionCode,
@@ -64,13 +64,13 @@ public class SightController {
     }
 
     @ApiOperation("景点详细信息")
-    @GetMapping("getSightById/{sightId}")
+    @GetMapping("pub/getSightById/{sightId}")
     public Result getSightInfo(@ApiParam("景点id") @PathVariable("sightId") String sightId) {
         return sightService.getSightInfo(sightId);
     }
 
     @ApiOperation(value = "获取相似景点", notes = "根据景点ID查询其他类似的景点")
-    @GetMapping("getSimilarSights/{sightId}")
+    @GetMapping("pub/getSimilarSights/{sightId}")
     public Result getSimilarSightsById(@ApiParam("景点id") @PathVariable("sightId") String sightId,
                                        @ApiParam("期望的相似类型的数量") @RequestParam("typeSize") int typeSize,
                                        @ApiParam("期望的相似地点的数量") @RequestParam("regionSize") int regionSize){

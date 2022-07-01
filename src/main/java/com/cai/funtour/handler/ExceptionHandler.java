@@ -2,8 +2,10 @@ package com.cai.funtour.handler;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cai.funtour.pojo.Result;
+import com.cai.funtour.tools.Tools;
 import com.google.common.net.HttpHeaders;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
@@ -30,9 +32,10 @@ public class ExceptionHandler implements WebExceptionHandler {
     private static Map<String, Result> errMap;
     static {
         errMap = new HashMap<String, Result>();
-        errMap.put("ConnectException", Result.error(502, "服务连接出错!"));
-        errMap.put("TimeoutException", Result.error(505, "服务连接超时!"));
-        errMap.put("AnnotatedConnectException", Result.error(505, "服务连接超时!"));
+        errMap.put("ConnectException", Result.error(502, "服务连接出错"));
+        errMap.put("TimeoutException", Result.error(505, "服务连接超时"));
+        errMap.put("AnnotatedConnectException", Result.error(505, "服务连接超时"));
+        errMap.put("ResourceAccessException", Result.error(505, "资源访问异常"));
     }
 
     public static Result getErrorResult(String simpleClassName){
@@ -41,6 +44,8 @@ public class ExceptionHandler implements WebExceptionHandler {
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+        MDC.put(Tools.TRACE_ID, exchange.getRequest().getHeaders().getFirst(Tools.TRACE_ID));
+
         if (exchange.getResponse().isCommitted()) {
             return Mono.error(ex);
         }

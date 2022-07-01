@@ -8,10 +8,12 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.cai.funtour.encryption.RSA256Key;
+import com.cai.funtour.handler.ExceptionHandler;
 import com.cai.funtour.pojo.Result;
 import com.cai.funtour.tools.Tools;
 import com.google.common.net.HttpHeaders;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -23,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -96,13 +99,17 @@ public class AccessFilter implements GlobalFilter, Ordered {
         // 从redis验证并刷新token有效期
         try {
             String url = "http://czytgc.com:8771/public/user/cache/" + token;
-            ResponseEntity<Result> response = restTemplate.exchange(url, HttpMethod.GET, null, Result.class);
+            org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+            headers.set(Tools.TRACE_ID, MDC.get(Tools.TRACE_ID));
+            HttpEntity entity = new HttpEntity(null, headers);
+            ResponseEntity<Result> response = restTemplate.exchange(url, HttpMethod.GET, entity, Result.class);
             Result cache = response.getBody();
             if (cache.getCode() != 200) {
                 return responseError(exchange, 401, "token过期");
             }
         }catch (Exception e){
-            return responseError(exchange, 503, "验证token出错");
+            log.error("请求出错，错误类型：{};错误信息：{};错误原因：{}",e.getClass().getSimpleName(), e.getMessage(), e.getCause());
+            return responseError(exchange, ExceptionHandler.getErrorResult(e.getClass().getSimpleName()).getCode(), ExceptionHandler.getErrorResult(e.getClass().getSimpleName()).getErrMes());
         }
 
         return chain.filter(exchange);

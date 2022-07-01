@@ -60,8 +60,7 @@ public class AccessFilter implements GlobalFilter, Ordered {
 
         // 从redis验证并刷新token有效期
         try {
-            String key = "funTour:token:" + token;
-            String url = "http://czytgc.com:8771/public/user/cache/" + key;
+            String url = "http://czytgc.com:8771/public/user/cache/" + token;
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Result> response = restTemplate.exchange(url, HttpMethod.GET, null, Result.class);
             Result cache = response.getBody();

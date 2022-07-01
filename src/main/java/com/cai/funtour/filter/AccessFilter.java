@@ -26,9 +26,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import sun.misc.BASE64Decoder;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Date;
 
 /**
@@ -58,29 +67,41 @@ public class AccessFilter implements GlobalFilter, Ordered {
             return responseError(exchange, 401, "不含token");
         }
 
+        RestTemplate restTemplate = new RestTemplate();
+
+        // token校验
+        //try {
+        //    // 获取publicKey
+        //    String url = "http://czytgc.com:8771/public/system/getPublicKey";
+        //    ResponseEntity<Result> response = restTemplate.exchange(url, HttpMethod.GET, null, Result.class);
+        //    Result result = response.getBody();
+        //    String publicString = result.getData().toString();
+        //    PublicKey publicKey = parsePublicKey(publicString);
+        //    PrivateKey privateKey = parsePublicKey()
+        //    String userId = JWT.decode(token).getAudience().get(0);
+        //    JWTVerifier verifier = JWT.require(Algorithm.RSA256((RSAPublicKey)publicKey, (RSAPrivateKey) privateKey).withIssuer(Tools.JWT_IISUSER).build();
+        //    DecodedJWT decodedJWT = verifier.verify(token);
+        //    // 把userId放入请求头
+        //    exchange.getRequest().mutate().header("userId", userId);
+        //} catch (NoSuchAlgorithmException e) {
+        //    log.error("RSA公私钥生成错误", e);
+        //    return responseError(exchange, 500, "系统错误");
+        //} catch (JWTVerificationException e) {
+        //    return responseError(exchange, 401, "token校验失败");
+        //} catch (Exception e){
+        //    return responseError(exchange, 502, "token验签出错");
+        //}
+
         // 从redis验证并刷新token有效期
         try {
             String url = "http://czytgc.com:8771/public/user/cache/" + token;
-            RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Result> response = restTemplate.exchange(url, HttpMethod.GET, null, Result.class);
             Result cache = response.getBody();
-            if (cache == null) {
+            if (cache.getCode() != 200) {
                 return responseError(exchange, 401, "token过期");
             }
         }catch (Exception e){
             return responseError(exchange, 503, "验证token出错");
-        }
-
-        // token校验
-        try {
-            String userId = JWT.decode(token).getAudience().get(0);
-            JWTVerifier verifier = JWT.require(Algorithm.RSA256(RSA256Key.getInstance().getPublicKey())).withIssuer(Tools.JWT_IISUSER).build();
-            DecodedJWT decodedJWT = verifier.verify(token);
-        } catch (NoSuchAlgorithmException e) {
-            log.error("RSA公私钥生成错误", e);
-            return responseError(exchange, 500, "系统错误");
-        } catch (JWTVerificationException e) {
-            return responseError(exchange, 401, "token校验失败");
         }
 
         return chain.filter(exchange);
@@ -111,5 +132,24 @@ public class AccessFilter implements GlobalFilter, Ordered {
 
         log.info("token校验失败，返回结果：{}", result);
         return response.writeWith(Mono.just(wrap));
+    }
+
+    public PublicKey parsePublicKey(String buffer) {
+        try {
+            // 把公钥的Base64文本 转换为已编码的公钥bytes
+            byte[] encPubKey = new BASE64Decoder().decodeBuffer(buffer);
+            // 创建已编码的公钥规格
+            X509EncodedKeySpec encPubKeySpec = new X509EncodedKeySpec(encPubKey);
+            // 获取指定算法的密钥工厂, 根据已编码的公钥规格, 生成公钥对象
+            PublicKey pubKey = KeyFactory.getInstance("RSA").generatePublic(encPubKeySpec);
+            return pubKey;
+        } catch (IOException e) {
+            log.error("转换公钥bytes出错", e);
+        } catch (InvalidKeySpecException e) {
+            log.error("获取KeyFactory出错",e);
+        } catch (NoSuchAlgorithmException e) {
+            log.error("生成公钥失败", e);
+        }
+        return null;
     }
 }

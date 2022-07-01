@@ -52,6 +52,9 @@ public class AccessFilter implements GlobalFilter, Ordered {
     private final String ALLOW_URL = "/pub";
     private final String SWAGGER_URL = "/swagger-ui.html";
 
+    @Autowired
+    RestTemplate restTemplate;
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String token = exchange.getRequest().getHeaders().getFirst(Tools.TOKEN);
@@ -66,8 +69,6 @@ public class AccessFilter implements GlobalFilter, Ordered {
         if (StringUtils.isBlank(token)) {
             return responseError(exchange, 401, "不含token");
         }
-
-        RestTemplate restTemplate = new RestTemplate();
 
         // token校验
         //try {

@@ -1,16 +1,22 @@
 package com.cai.funtour.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cai.funtour.api.pub.SightService;
 import com.cai.funtour.api.pub.UserService;
+import com.cai.funtour.config.KafkaProducer;
 import com.cai.funtour.pojo.Result;
+import com.cai.funtour.tools.Tools;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,6 +33,8 @@ public class SightController {
     SightService sightService;
     @Reference
     UserService userService;
+    @Autowired
+    KafkaProducer kafkaProducer;
 
 
     @ApiOperation("景点查询接口")
@@ -65,7 +73,20 @@ public class SightController {
 
     @ApiOperation("景点详细信息")
     @GetMapping("pub/getSightById/{sightId}")
-    public Result getSightInfo(@ApiParam("景点id") @PathVariable("sightId") String sightId) {
+    public Result getSightInfo(@ApiParam("景点id") @PathVariable("sightId") String sightId,
+                               @RequestHeader(value = "userId", required = false) String userId) {
+        // 有userId则投递kafka消息：用户偏好景点
+        if (StringUtils.isNotBlank(userId)){
+            HashMap<String, String> msg = new HashMap<>();
+            msg.put("userId", userId);
+            msg.put("sightId", sightId);
+            String kafka_msg = JSON.toJSONString(msg);
+            kafkaProducer.send(Tools.KAFKA_TOPIC_PREFERENCE,kafka_msg,null);
+        }
+        // 投递kafka消息：热门景点
+        kafkaProducer.send(Tools.KAFKA_TOPIC_HOTSIGHT, sightId, null);
+
+
         return sightService.getSightInfo(sightId);
     }
 

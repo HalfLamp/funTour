@@ -9,14 +9,34 @@ spring:
   application:
     name: sight-consumer
   cloud:
+    # nacos配置
     nacos:
       discovery:
         server-addr: czytgc.com:8848
         group: FUNTOUR
         namespace: 73545db9-50de-4b82-a402-431797133453
+  # JSON日期格式化
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  # kafka配置
+  kafka:
+    bootstrap-servers: czytgc.com:9092
+    producer:
+      # 失败重传次数
+      retries: 2
+      # 0:不接受ack消息 1：leader收到消息触发 all:全部接收到后触发
+      acks: 1
+      # 键值序列化
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 一个批次可使用的内存大小
+      batch-size: 16384
+      # 缓冲区大小
+      buffer-memory: 33554432
+      properties:
+        # 开启消息幂等
+        enable.idempotence: true
 dubbo:
   protocol:
     # http;RMI;Redis;H;dubbo

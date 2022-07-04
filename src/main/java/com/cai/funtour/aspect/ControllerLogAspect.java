@@ -12,6 +12,7 @@ import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * @author ：caizhiyuan
@@ -33,13 +34,13 @@ public class ControllerLogAspect {
         logger.info("请求参数： {}", Arrays.toString(args));
 
 
-            result = (Result)pjp.proceed();
-
-            logger.info("返回结果： {}", result == null ? "null" : result);
-            return result;
+        result = (Result) pjp.proceed();
+        Map data = result.getData(Map.class);
+        result.setData(data);
+        logger.info("返回结果： {}", result == null ? "null" : result);
+        return result;
 
     }
-
 
 
 }

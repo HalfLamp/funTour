@@ -23,6 +23,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
@@ -64,6 +65,17 @@ public class AccessFilter implements GlobalFilter, Ordered {
         String path = exchange.getRequest().getPath().toString();
         log.info("请求路径：{}；请求token：{}", path, token);
 
+        // 如有token，则解析userId放入header
+        if (StringUtils.isNotBlank(token)){
+            String userId = JWT.decode(token).getAudience().get(0);
+            ServerHttpRequest request = exchange.getRequest();
+            ServerHttpRequest.Builder mutate = request.mutate();
+            if (StringUtils.isNotBlank(userId)){
+                mutate.header("userId", userId);
+                ServerHttpRequest build = mutate.build();
+                exchange.mutate().request(build).build();
+            }
+        }
         // 公共请求，不检查token
         if (path.contains(PUBLIC_URL) || path.contains(SWAGGER_URL) || path.contains(ALLOW_URL)) {
             return chain.filter(exchange);

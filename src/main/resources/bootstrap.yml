@@ -25,8 +25,8 @@ spring:
     producer:
       # 失败重传次数
       retries: 2
-      # 0:不接受ack消息 1：leader收到消息触发 all:全部接收到后触发
-      acks: 1
+      # 0:不接受ack消息 1：leader收到消息触发 all/-1:全部接收到后触发
+      acks: -1
       # 键值序列化
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer

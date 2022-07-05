@@ -67,14 +67,19 @@ public class AccessFilter implements GlobalFilter, Ordered {
 
         // 如有token，则解析userId放入header
         if (StringUtils.isNotBlank(token)){
-            String userId = JWT.decode(token).getAudience().get(0);
-            ServerHttpRequest request = exchange.getRequest();
-            ServerHttpRequest.Builder mutate = request.mutate();
-            if (StringUtils.isNotBlank(userId)){
-                mutate.header("userId", userId);
-                ServerHttpRequest build = mutate.build();
-                exchange.mutate().request(build).build();
+            try {
+                String userId = JWT.decode(token).getAudience().get(0);
+                ServerHttpRequest request = exchange.getRequest();
+                ServerHttpRequest.Builder mutate = request.mutate();
+                if (StringUtils.isNotBlank(userId)){
+                    mutate.header("userId", userId);
+                    ServerHttpRequest build = mutate.build();
+                    exchange.mutate().request(build).build();
+                }
+            }catch (Exception e){
+                log.warn("用户token异常，无法解析出userId：{}", token);
             }
+
         }
         // 公共请求，不检查token
         if (path.contains(PUBLIC_URL) || path.contains(SWAGGER_URL) || path.contains(ALLOW_URL)) {

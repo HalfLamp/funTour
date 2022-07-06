@@ -75,16 +75,16 @@ public class SightController {
     @GetMapping("pub/getSightById/{sightId}")
     public Result getSightInfo(@ApiParam("景点id") @PathVariable("sightId") String sightId,
                                @RequestHeader(value = "userId", required = false) String userId) {
+        HashMap<String, String> msg = new HashMap<>();
+        msg.put("userId", userId);
+
+        // 投递kafka消息：热门景点
+        kafkaProducer.send(Tools.KAFKA_TOPIC_HOTSIGHT, JSON.toJSONString(msg), null);
         // 有userId则投递kafka消息：用户偏好景点
         if (StringUtils.isNotBlank(userId)){
-            HashMap<String, String> msg = new HashMap<>();
-            msg.put("userId", userId);
             msg.put("sightId", sightId);
-            String kafka_msg = JSON.toJSONString(msg);
-            kafkaProducer.send(Tools.KAFKA_TOPIC_PREFERENCE,kafka_msg,null);
+            kafkaProducer.send(Tools.KAFKA_TOPIC_PREFERENCE,JSON.toJSONString(msg),null);
         }
-        // 投递kafka消息：热门景点
-        kafkaProducer.send(Tools.KAFKA_TOPIC_HOTSIGHT, sightId, null);
 
 
         return sightService.getSightInfo(sightId);

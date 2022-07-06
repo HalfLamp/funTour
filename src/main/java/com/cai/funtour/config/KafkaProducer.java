@@ -1,6 +1,7 @@
 package com.cai.funtour.config;
 
 import com.alibaba.fastjson.JSON;
+import com.cai.funtour.filter.HttpTraceInfoFilter;
 import com.cai.funtour.tools.Tools;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -26,11 +27,11 @@ public class KafkaProducer {
     @Autowired
     KafkaTemplate<String, String> kafkaTemplate;
 
-    public void send(String topic, Object msg, @Nullable Integer partition){
+    public void send(String topic, Object msg, @Nullable Integer partition) {
         String message = "";
-        if (msg instanceof String){
-            message = (String)msg;
-        }else{
+        if (msg instanceof String) {
+            message = (String) msg;
+        } else {
             message = JSON.toJSONString(msg);
         }
 
@@ -41,7 +42,14 @@ public class KafkaProducer {
                 .setHeader(Tools.TRACE_ID, MDC.get(Tools.TRACE_ID))
                 .build();
         ListenableFuture<SendResult<String, String>> ack = kafkaTemplate.send(mes);
-        ack.addCallback(ok -> log.info("投递消息成功：topic:{};msg:{};partition:{}", topic, msg, partition),
-                err -> log.error("投递消息失败：topic:{};msg:{};partition:{}\n失败原因：错误类型：{};错误原因：{};错误信息：{}", topic, msg, partition, err.getClass(), err.getCause(),err.getMessage()));
+        String traceId = HttpTraceInfoFilter.traceThreadLocal.get();
+        ack.addCallback(ok -> {
+                    MDC.put(Tools.TRACE_ID, traceId);
+                    log.info("投递消息成功：topic:{};msg:{};partition:{}", topic, msg, partition);
+                },
+                err -> {
+                    MDC.put(Tools.TRACE_ID, traceId);
+                    log.error("投递消息失败：topic:{};msg:{};partition:{}\n失败原因：错误类型：{};错误原因：{};错误信息：{}", topic, msg, partition, err.getClass(), err.getCause(), err.getMessage());
+                });
     }
 }

@@ -79,10 +79,11 @@ public class SightController {
         msg.put("userId", userId);
 
         // 投递kafka消息：热门景点
-        kafkaProducer.send(Tools.KAFKA_TOPIC_HOTSIGHT, JSON.toJSONString(msg), null);
+        //kafkaProducer.send(Tools.KAFKA_TOPIC_HOTSIGHT, JSON.toJSONString(msg), null);
         // 有userId则投递kafka消息：用户偏好景点
         if (StringUtils.isNotBlank(userId)){
             msg.put("sightId", sightId);
+            msg.put("weight", "3");
             kafkaProducer.send(Tools.KAFKA_TOPIC_PREFERENCE,JSON.toJSONString(msg),null);
         }
 

@@ -13,8 +13,6 @@ env:
   PORT: 8774
   CONTAINERPATH: /app/logs/consumer/kafka
   HOSTPATH: /usr/local/springboot/vol/user/java/consumer/kafka
-  MAVENHOSTPATH: /usr/local/springboot/vol/user/java/repository
-  MAVENCONTAINERPATH: /root/.m2/repository
 
 jobs:
   build:

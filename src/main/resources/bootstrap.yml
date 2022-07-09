@@ -1,0 +1,46 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: kafka-consumer
+  cloud:
+    nacos:
+      server-addr: czytgc.com:8848
+      config:
+        group: FUNTOUR_DEV
+        file-extension: yaml
+        prefix: PROVIDER_DATABASE
+        server-addr: czytgc.com:8848
+  kafka:
+    bootstrap-servers: czytgc.com:9092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: latest
+      auto-commit-interval: 1000
+      enable-auto-commit: false
+      properties:
+        group:
+          id: dev
+        session:
+          timeout:
+            ms: 120000
+        request:
+          timeout:
+            ms: 180000
+    listener:
+      ack-mode: manual
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  main:
+    allow-circular-references: true
+mybatis:
+  type-aliases-package: com.cai.funtour.po
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    root: info
+  config: classpath:log4j2.xml

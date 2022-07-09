@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cai.funtour.mapper.LabelMapper">
+    <select id="getSightLabels" parameterType="string" resultType="label">
+        select id, type, label, score, is_use, uniqueId, update_time
+        from c_label
+        where uniqueId = #{sightId}
+          and type = ${@com.cai.funtour.mapper.LabelMapper@SIGHT_LABEL_MAPPER}
+        order by score desc
+    </select>
+
+    <select id="getUserLabels" resultType="label">
+        select id, type, label, score, is_use, uniqueId, update_time
+        from c_label
+        where uniqueId = #{userId}
+          and type = ${@com.cai.funtour.mapper.LabelMapper@USER_LABEL_MAPPER}
+        order by score desc
+    </select>
+
+    <insert id="insertUserLabels" parameterType="string">
+        insert into c_label (type, label, uniqueId)
+        values (${@com.cai.funtour.mapper.LabelMapper@USER_LABEL_MAPPER}, #{labelId}, #{userId})
+    </insert>
+
+    <update id="updateUserLabel" parameterType="string">
+        update c_label
+        set label = #{labelId}
+        where uniqueId = #{uniqueId}
+          and type = ${@com.cai.funtour.mapper.LabelMapper@USER_LABEL_MAPPER}
+    </update>
+
+    <insert id="updateUserScore" parameterType="label">
+        insert into c_label (type, label, uniqueId, is_use, score)
+        VALUES (#{type}, #{label}, #{uniqueId}, #{isUse}, #{score}) ON DUPLICATE KEY
+        UPDATE score = score + #{score}
+    </insert>
+
+    <delete id="deleteUserInuseLabel" parameterType="string">
+        delete
+        from c_label
+        where type = ${@com.cai.funtour.mapper.LabelMapper@USER_LABEL_MAPPER}
+          and uniqueId = #{userId}
+          and is_use = "1"
+    </delete>
+</mapper>

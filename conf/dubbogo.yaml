@@ -5,7 +5,7 @@ dubbo:
     nacosWithCustomGroup:
       protocol: nacos # 注册中心选择 nacos
       address: czytgc.com:8848 # nacos ip
-      namespace: 9d41cfe3-93be-48f4-8ed0-cc6a37e4bffa
+      namespace: 73545db9-50de-4b82-a402-431797133453
   protocols:
     dubbo:
       name: dubbo

@@ -43,7 +43,7 @@ func (*SightService) GetSightList(userId, key string, types, regionCode []string
 	const start = "select * from ( " +
 		" select sight_id,`name`,`describe`,region_id,best_time,star_level,hot_level,cover_images,address, 2 as sort from c_sight where sight_id in ( " +
 		"	select uniqueId from c_label where label in ( " +
-		"		select label from c_label where uniqueId = ? and type = '用户') " +
+		"		select label from c_label where uniqueId = ? and type = '用户' and is_use = '1') " +
 		"	and type = '景点') and is_use='1' " +
 		" UNION " +
 		" SELECT sight_id,`name`,`describe`,region_id,best_time,star_level,hot_level,cover_images,address, 1 as sort from c_sight where is_use='1' " +

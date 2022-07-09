@@ -1,0 +1,36 @@
+I 2022/07/04 18:06:30 mylog.go:44: traceId: message:Mysql数据库连接成功： czy:Mysql@826525@tcp(czytgc.com:3307)/amusingtourdb?charset=utf8&parseTime=True&loc=Local&timeout=10s
+ 
+I 2022/07/04 18:06:30 mylog.go:44: traceId: message:初始化过滤器
+ 
+I 2022/07/04 18:06:45 mylog.go:44: traceId:2920473a6957025fff145d08912d7acf4a6fbfe message:dubbo调用方法名称： getCacheByToken
+ 
+I 2022/07/04 18:06:45 mylog.go:44: traceId:2920473a6957025fff145d08912d7acf4a6fbfe message:方法参数:  ["53850220-e2bb-4e40-8f4e-c899bcd4d62126968_eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1Mzg1MDIyMC1lMmJiLTRlNDAtOGY0ZS1jODk5YmNkNGQ2MjEyNjk2OCIsImlhdCI6MTY1NjkyODczMX0.ODctpmnChqCpAT4bn-plXJt3vmzZ9txmurtLBpMjS9Z-7aKbegiKx0GdGweyd305dGx5cEPEaTZG7KHhbII_Fz-tfqElEGLdwkKzMOcYVY0jZjJ-d453b3xDu5FRrkqAA16ITdMHqjDK_Z1ulnI-ewJCCLEatmQfZAN0iZfkAz8"]
+ 
+I 2022/07/04 18:06:45 mylog.go:44: traceId:2920473a6957025fff145d08912d7acf4a6fbfe message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/07/04 18:06:45 mylog.go:44: traceId:2920473a6957025fff145d08912d7acf4a6fbfe message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/07/04 18:06:45 mylog.go:44: traceId:2920473a6957025fff145d08912d7acf4a6fbfe message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"10.1.242.65:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"10.1.242.65:60871","remote.application":"public-consumer","traceId":"2920473a6957025fff145d08912d7acf4a6fbfe","version":"0.0.0"},"Err":null,"Rest":{"code":200,"errMes":"","data":"{\"age\":22,\"createTime\":\"2022-01-09T14:32:08Z\",\"email\":\"123\",\"extra\":\"\",\"icon\":\"\",\"id\":5,\"image\":\"\",\"isMember\":\"1\",\"isProhibit\":\"0\",\"name\":\"管理员\",\"password\":\"123\",\"phone\":\"123\",\"prohibitReason\":\"\",\"regionId\":\"\",\"sex\":\"1\",\"sign\":\"\",\"updateTime\":\"2022-01-09T14:33:19Z\",\"userId\":\"53850220-e2bb-4e40-8f4e-c899bcd4d62126968\"}"}}
+ 
+I 2022/07/04 18:16:30 mylog.go:44: traceId:2920473a6957025fff145d08912d7acf4a6fbfe message:LRU热点数据定时任务调度：当前时间为: 2022-07-04 18:16:30.2885094 +0800 CST m=+600.090004301
+ 
+I 2022/07/04 18:16:30 mylog.go:44: traceId:2920473a6957025fff145d08912d7acf4a6fbfe message:redis连接并认证成功：czytgc.com:6379
+ 
+es/3081876c97b9d914ac74efbaf844acf2ab51758.jpg;http://file.czytgc.com/images/30819000f30de9c42db407aa7f37e9b623bd42e.jpg;http://file.czytgc.com/images/308197454fafb96a6cf441a99de470f4c90c0e1.png;http://file.czytgc.com/images/308200886ddf0ef0e444550b76ae122279f7b71.jpg;http://file.czytgc.com/images/3082025b61848340df54d8cbc3223b810fe86c5.jpg\",\"extra\":\"\",\"type\":\"\",\"address\":\"位于亚龙湾国家旅游度假区内\",\"create_time\":\"2022-06-08T14:17:09+08:00\",\"update_time\":\"2022-06-21T17:08:24+08:00\",\"is_use\":\"1\"}"}}
+ 
+I 2022/06/30 17:16:24 mylog.go:44: traceId:8004326fa9d570398de490cac165e9096ec8790 message:LRU热点数据定时任务调度：当前时间为: 2022-06-30 17:16:24.8166378 +0800 CST m=+600.059790801
+ 
+I 2022/06/30 17:16:25 mylog.go:44: traceId:8004326fa9d570398de490cac165e9096ec8790 message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/06/30 17:26:24 mylog.go:44: traceId:8004326fa9d570398de490cac165e9096ec8790 message:LRU热点数据定时任务调度：当前时间为: 2022-06-30 17:26:24.8203395 +0800 CST m=+1200.063492501
+ 
+I 2022/06/30 17:26:25 mylog.go:44: traceId:8004326fa9d570398de490cac165e9096ec8790 message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/06/30 17:36:24 mylog.go:44: traceId:8004326fa9d570398de490cac165e9096ec8790 message:LRU热点数据定时任务调度：当前时间为: 2022-06-30 17:36:24.8097979 +0800 CST m=+1800.052950901
+ 
+G4A","{\"age\":21,\"createTime\":\"2021-10-21T22:12:55+08:00\",\"email\":\"\",\"extra\":\"\",\"icon\":\"http://127.0.0.1:9000/user/images/d76f68e23689445fa4686cafb57688771638675046018.jpg\",\"id\":2,\"image\":\"aaaa\",\"isMember\":\"0\",\"isProhibit\":\"0\",\"name\":\"root\",\"password\":\"caizhiyuan\",\"phone\":\"18384145266\",\"prohibitReason\":\"\",\"regionId\":\"\",\"sex\":\"0\",\"sign\":\"\",\"updateTime\":\"2022-06-13T12:32:34+08:00\",\"userId\":\"75415\"}","1800"]
+ 
+I 2022/06/30 16:11:21 mylog.go:44: traceId:76662716322d4b345904d0793a8dbd14df65489 message:redis连接并认证成功：czytgc.com:6379
+ 
+I 2022/06/30 16:11:21 mylog.go:44: traceId:76662716322d4b345904d0793a8dbd14df65489 message:响应结果： {"Attrs":{"dubbo":"2.0.2","interface":"com.cai.funtour.api.pub.UserService","local-addr":"192.168.126.1:20000","path":"com.cai.funtour.api.pub.UserService","remote-addr":"192.168.126.1:51323","remote.application":"public-consumer","traceId":"76662716322d4b345904d0793a8dbd14df65489","version":"0.0.0"},"Err":null,"Rest":{"code":200,"errMes":"","data":""}}
+ 

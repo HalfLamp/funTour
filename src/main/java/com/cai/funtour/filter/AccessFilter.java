@@ -54,7 +54,8 @@ import java.util.Date;
 public class AccessFilter implements GlobalFilter, Ordered {
     private final String PUBLIC_URL = "/public";
     private final String ALLOW_URL = "/pub";
-    private final String SWAGGER_URL = "/swagger-ui.html";
+    private final String SWAGGER_URL = "/swagger";
+    private final String API_DOCS = "/api-docs";
 
     @Autowired
     RestTemplate restTemplate;
@@ -82,7 +83,7 @@ public class AccessFilter implements GlobalFilter, Ordered {
 
         }
         // 公共请求，不检查token
-        if (path.contains(PUBLIC_URL) || path.contains(SWAGGER_URL) || path.contains(ALLOW_URL)) {
+        if (path.contains(PUBLIC_URL) || path.contains(SWAGGER_URL) || path.contains(ALLOW_URL) || path.contains(API_DOCS)) {
             return chain.filter(exchange);
         }
         // 不含token

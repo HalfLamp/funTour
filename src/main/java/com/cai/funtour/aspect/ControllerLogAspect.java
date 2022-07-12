@@ -1,5 +1,6 @@
 package com.cai.funtour.aspect;
 
+import com.cai.funtour.filter.HttpTraceInfoFilter;
 import com.cai.funtour.pojo.Result;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -34,6 +35,9 @@ public class ControllerLogAspect {
         Map data = result.getData(Map.class);
         result.setData(data);
         logger.info("返回结果： {}", result == null ? "null" : result);
+
+        // 释放treadLocal
+        HttpTraceInfoFilter.traceThreadLocal.remove();
         return result;
     }
 }

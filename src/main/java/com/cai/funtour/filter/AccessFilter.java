@@ -54,7 +54,7 @@ import java.util.Date;
 public class AccessFilter implements GlobalFilter, Ordered {
     private final String PUBLIC_URL = "/public";
     private final String ALLOW_URL = "/pub";
-    private final String SWAGGER_URL = "/swagger";
+    private final String SWAGGER_URL = "swagger";
     private final String API_DOCS = "/api-docs";
 
     @Autowired

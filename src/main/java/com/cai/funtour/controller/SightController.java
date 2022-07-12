@@ -55,7 +55,7 @@ public class SightController {
         // 没有添加限制条件
         if (key == null && type == null && regionCode == null) {
             // 根据用户推荐个性化的景点列表
-            return sightService.getSightListByUser(userId,page,size);
+            return sightService.getSightListByUser(userId, page, size);
         } else {
             // 根据条件查询景点列表
             if (key == null) {
@@ -67,7 +67,7 @@ public class SightController {
             if (regionCode == null) {
                 regionCode = new String[]{};
             }
-            return sightService.getSightList(userId,key,type,regionCode,page,size);
+            return sightService.getSightList(userId, key, type, regionCode, page, size);
         }
     }
 
@@ -75,16 +75,15 @@ public class SightController {
     @GetMapping("pub/getSightById/{sightId}")
     public Result getSightInfo(@ApiParam("景点id") @PathVariable("sightId") String sightId,
                                @RequestHeader(value = "userId", required = false) String userId) {
-        HashMap<String, String> msg = new HashMap<>();
-        msg.put("userId", userId);
-
+        HashMap<String, String> msg = new HashMap<>(3);
+        msg.put("sightId", sightId);
+        msg.put("weight", "1");
         // 投递kafka消息：热门景点
         //kafkaProducer.send(Tools.KAFKA_TOPIC_HOTSIGHT, JSON.toJSONString(msg), null);
-        // 有userId则投递kafka消息：用户偏好景点
-        if (StringUtils.isNotBlank(userId)){
-            msg.put("sightId", sightId);
-            msg.put("weight", "3");
-            kafkaProducer.send(Tools.KAFKA_TOPIC_PREFERENCE,JSON.toJSONString(msg),null);
+        /// 有userId则投递kafka消息：用户偏好景点
+        if (StringUtils.isNotBlank(userId)) {
+            msg.put("userId", userId);
+            kafkaProducer.send(Tools.KAFKA_TOPIC_PREFERENCE, JSON.toJSONString(msg), null);
         }
 
 
@@ -95,7 +94,28 @@ public class SightController {
     @GetMapping("pub/getSimilarSights/{sightId}")
     public Result getSimilarSightsById(@ApiParam("景点id") @PathVariable("sightId") String sightId,
                                        @ApiParam("期望的相似类型的数量") @RequestParam("typeSize") int typeSize,
-                                       @ApiParam("期望的相似地点的数量") @RequestParam("regionSize") int regionSize){
+                                       @ApiParam("期望的相似地点的数量") @RequestParam("regionSize") int regionSize) {
         return sightService.similarSights(sightId, typeSize, regionSize);
     }
+
+    @ApiOperation(value = "景点收藏")
+    @GetMapping("collect/{sightId}")
+    public Result sightCollection(@ApiParam("景点Id") @PathVariable("sightId") String sightId,
+                                  @ApiParam("用户Id") @RequestHeader("userId") String userId) {
+        // 投递kafka热门景点消息
+        HashMap<String, String> message = new HashMap<>(2);
+        message.put("sightId", sightId);
+        message.put("weight", "3");
+        kafkaProducer.send(Tools.KAFKA_TOPIC_HOTSIGHT, JSON.toJSONString(message), null);
+
+        return sightService.collectSight(sightId, userId);
+    }
+
+    @ApiOperation(value = "添加足迹", notes = "添加景点到用户足迹")
+    @GetMapping("footMark/{sightId}")
+    public Result footMark(@ApiParam("景点Id") @PathVariable("sightId") String sightId,
+                           @ApiParam("用户Id") @RequestHeader("userId") String userId) {
+        return sightService.addToFootMark(sightId, userId);
+    }
+
 }

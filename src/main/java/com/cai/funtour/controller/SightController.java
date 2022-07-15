@@ -118,4 +118,6 @@ public class SightController {
         return sightService.addToFootMark(sightId, userId);
     }
 
+
+
 }

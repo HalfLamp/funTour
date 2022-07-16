@@ -16,6 +16,8 @@ func main() {
 	g.ApplyBasic(g.GenerateModelAs("sys_params", "Param"))
 	g.ApplyBasic(g.GenerateModelAs("c_sight", "Sight"))
 	g.ApplyBasic(g.GenerateModelAs("c_label", "Label"))
+	g.ApplyBasic(g.GenerateModelAs("c_collect", "Collect"))
+	g.ApplyBasic(g.GenerateModelAs("c_clock", "Clock"))
 	g.Execute()
 
 	//tool.GetToken("")

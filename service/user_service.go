@@ -43,7 +43,7 @@ func (*UserService) Register(user *User) (*Result, error) {
 	u := query.Use(database.GetDb()).User
 	err := u.WithContext(context.TODO()).Select(u.ALL).Create(user)
 	if err != nil {
-		return Error(200, "注册失败"), nil
+		return Error(504, "注册失败"), nil
 	}
 
 	return ToDataWithName("user", user), nil

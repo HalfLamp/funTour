@@ -4,14 +4,21 @@
 
 package model
 
+import (
+	"time"
+)
+
 const TableNameLabel = "c_label"
 
 // Label mapped from table <c_label>
 type Label struct {
-	ID       int32  `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	Type     string `gorm:"column:type" json:"type"`         // 标签类型(用户，景点)
-	Label    string `gorm:"column:label" json:"label"`       // 标签
-	UniqueID string `gorm:"column:uniqueId" json:"uniqueId"` // 唯一标识（user_id,sight_id）
+	ID         int32     `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	Type       string    `gorm:"column:type" json:"type"`                                         // 标签类型(用户，景点)
+	Label      string    `gorm:"column:label" json:"label"`                                       // 标签
+	UniqueID   string    `gorm:"column:uniqueId" json:"uniqueId"`                                 // 唯一标识（user_id,sight_id）
+	Score      float32   `gorm:"column:score" json:"score"`                                       // 分数
+	IsUse      string    `gorm:"column:is_use" json:"is_use"`                                     // 是否启用该标签（0：不启用，1：启用）
+	UpdateTime time.Time `gorm:"column:update_time;default:CURRENT_TIMESTAMP" json:"update_time"` // 更新时间
 }
 
 // TableName Label's table name

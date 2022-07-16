@@ -137,11 +137,43 @@ func (*SightService) SimilarSights(sightId string, typeSize, regionSize int32) (
 	return ToData(result), nil
 }
 
+func (*SightService) CollectSight(sightId string, userId string) (*Result, error) {
+	defer tool.CatchPanic()
+
+	collect := &Collect{
+		SightID: sightId,
+		UserID:  userId,
+	}
+	query := query.Use(database.GetDb()).Collect
+	err := query.WithContext(context.TODO()).Select(query.SightID, query.UserID).Create(collect)
+	if err != nil {
+		return Error(504, "添加到收藏失败"), err
+	}
+	return Ok(), nil
+}
+
+func (*SightService) AddToFootMark(sightId string, userId string) (*Result, error) {
+	defer tool.CatchPanic()
+
+	clock := &Clock{
+		SightID: sightId,
+		UserID:  userId,
+	}
+	query := query.Use(database.GetDb()).Clock
+	err := query.WithContext(context.TODO()).Select(query.SightID, query.UserID).Create(clock)
+	if err != nil {
+		return Error(504, "添加到足迹失败"), err
+	}
+	return Ok(), nil
+}
+
 func (*SightService) MethodMapper() map[string]string {
 	return map[string]string{
 		"GetSightListByUser": "getSightListByUser",
 		"GetSightList":       "getSightList",
 		"GetSightInfo":       "getSightInfo",
 		"SimilarSights":      "similarSights",
+		"CollectSight":       "collectSight",
+		"AddToFootMark":      "addToFootMark",
 	}
 }

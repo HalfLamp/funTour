@@ -29,6 +29,9 @@ func newLabel(db *gorm.DB) label {
 	_label.Type = field.NewString(tableName, "type")
 	_label.Label = field.NewString(tableName, "label")
 	_label.UniqueID = field.NewString(tableName, "uniqueId")
+	_label.Score = field.NewFloat32(tableName, "score")
+	_label.IsUse = field.NewString(tableName, "is_use")
+	_label.UpdateTime = field.NewTime(tableName, "update_time")
 
 	_label.fillFieldMap()
 
@@ -38,11 +41,14 @@ func newLabel(db *gorm.DB) label {
 type label struct {
 	labelDo labelDo
 
-	ALL      field.Field
-	ID       field.Int32
-	Type     field.String
-	Label    field.String
-	UniqueID field.String
+	ALL        field.Field
+	ID         field.Int32
+	Type       field.String
+	Label      field.String
+	UniqueID   field.String
+	Score      field.Float32
+	IsUse      field.String
+	UpdateTime field.Time
 
 	fieldMap map[string]field.Expr
 }
@@ -63,6 +69,9 @@ func (l *label) updateTableName(table string) *label {
 	l.Type = field.NewString(table, "type")
 	l.Label = field.NewString(table, "label")
 	l.UniqueID = field.NewString(table, "uniqueId")
+	l.Score = field.NewFloat32(table, "score")
+	l.IsUse = field.NewString(table, "is_use")
+	l.UpdateTime = field.NewTime(table, "update_time")
 
 	l.fillFieldMap()
 
@@ -85,11 +94,14 @@ func (l *label) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (l *label) fillFieldMap() {
-	l.fieldMap = make(map[string]field.Expr, 4)
+	l.fieldMap = make(map[string]field.Expr, 7)
 	l.fieldMap["id"] = l.ID
 	l.fieldMap["type"] = l.Type
 	l.fieldMap["label"] = l.Label
 	l.fieldMap["uniqueId"] = l.UniqueID
+	l.fieldMap["score"] = l.Score
+	l.fieldMap["is_use"] = l.IsUse
+	l.fieldMap["update_time"] = l.UpdateTime
 }
 
 func (l label) clone(db *gorm.DB) label {

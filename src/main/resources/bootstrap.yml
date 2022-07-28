@@ -1,0 +1,47 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /friend
+netty:
+  port: 8007
+spring:
+  main:
+    allow-circular-references: true
+  application:
+    name: public-consumer
+  cloud:
+    # nacos配置
+    nacos:
+      discovery:
+        server-addr: czytgc.com:8848
+        group: FUNTOUR
+        namespace: 73545db9-50de-4b82-a402-431797133453
+      config:
+        group: FUNTOUR_DEV
+        file-extension: yaml
+        prefix: PROVIDER_DATABASE_REDIS
+        server-addr: czytgc.com:8848
+  # JSON日期格式化
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+dubbo:
+  protocol:
+    # http;RMI;Redis;H;dubbo
+    name: dubbo
+    port: -1
+  registry:
+    # zookeeper;redis;nacos;Eureka
+    address: nacos://czytgc.com:8848
+    parameters:
+      namespace: 73545db9-50de-4b82-a402-431797133453
+  cloud:
+    # 订阅的服务，'*'表示所有，有多个用','分割
+    subscribed-services: "*"
+  consumer:
+    check: false
+    filter: traceId
+logging:
+  level:
+    root: info
+  config: classpath:log4j2.xml

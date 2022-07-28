@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        namespace: 9d41cfe3-93be-48f4-8ed0-cc6a37e4bffa
+dubbo:
+  registry:
+    parameters:
+      namespace: 9d41cfe3-93be-48f4-8ed0-cc6a37e4bffa
